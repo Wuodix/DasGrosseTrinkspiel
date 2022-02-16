@@ -12,7 +12,7 @@ namespace DasGrosseTrinkspiel.Views
 {
     public partial class SpielerMenu : ContentPage
     {
-        ViewModels.SpielerMenuViewModel viewModel;
+        readonly ViewModels.SpielerMenuViewModel viewModel;
         public SpielerMenu()
         {
             InitializeComponent();
@@ -35,9 +35,11 @@ namespace DasGrosseTrinkspiel.Views
         {
             if(m_tbxName.Text != null && m_cmbxGender.SelectedItem != null)
             {
-                Classes.Spieler spieler = new Classes.Spieler();
-                spieler.Name = m_tbxName.Text;
-                spieler.Geschlecht = m_cmbxGender.SelectedItem.ToString();
+                Classes.Spieler spieler = new Classes.Spieler
+                {
+                    Name = m_tbxName.Text,
+                    Geschlecht = m_cmbxGender.SelectedItem.ToString()
+                };
 
                 viewModel.Gamers.Add(spieler);
 
