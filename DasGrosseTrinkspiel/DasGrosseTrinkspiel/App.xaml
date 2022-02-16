@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
+             x:Class="DasGrosseTrinkspiel.App">
+    <Application.Resources>
+        <ResourceDictionary>
+            <Color x:Key="PrimaryBackground">#FD9D28</Color>
+            <Color x:Key="ButtonColor1">#DC2C23</Color>
+            <Color x:Key="GridColor1">#F56A2F</Color>
+            <System:Double x:Key="Spiele.ButtonHeight">60</System:Double>
+            <System:Double x:Key="Spiele.ButtonWidth">320</System:Double>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

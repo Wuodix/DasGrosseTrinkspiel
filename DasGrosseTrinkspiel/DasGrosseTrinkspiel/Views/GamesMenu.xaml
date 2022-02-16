@@ -1,0 +1,175 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DasGrosseTrinkspiel.Views.GamesMenu"
+             xmlns:local="clr-namespace:DasGrosseTrinkspiel.Extentions">
+    <ContentPage.Content>
+        <local:SwipeContainer Swipe="OnSwipe">
+            <RelativeLayout BackgroundColor="{StaticResource PrimaryBackground}">
+                <Label Text="Spiele" 
+                        TextColor="White"
+                        FontSize="50"
+                        Padding="0,20,0,0"
+                        RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0}"
+                        RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.32}"
+                />
+                <Button
+                        x:Name="m_btnBack"
+                        Clicked="m_btnBack_Clicked"
+                        BackgroundColor="Transparent"
+                        Text="Back"
+                        FontSize="16"
+                        RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=-0.02}"
+                        RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0}"
+                />
+                <ScrollView Margin="40,0,0,0"
+                        RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.0}"
+                        RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0.13}">
+                    <ScrollView.GestureRecognizers>
+                        <SwipeGestureRecognizer Direction="Right" Swiped="OnSwipe" />
+                    </ScrollView.GestureRecognizers>
+                    <AbsoluteLayout BackgroundColor="Transparent" HeightRequest="1250">
+                        <AbsoluteLayout.GestureRecognizers>
+                            <SwipeGestureRecognizer Direction="Right" Swiped="OnSwipe" />
+                        </AbsoluteLayout.GestureRecognizers>
+                        <Button Text="Wer Würde Eher...?"
+                            TextColor="White"
+                            Margin="0,0,40,0"
+                            FontSize="27"
+                            BackgroundColor="{StaticResource ButtonColor1}"
+                            WidthRequest="{StaticResource Spiele.ButtonWidth}"
+                            HeightRequest="{StaticResource Spiele.ButtonHeight}"
+                            AbsoluteLayout.LayoutBounds="0,0"
+                        />
+                        <Button Text="Ich hab noch nie..."
+                            TextColor="White"
+                            Margin="0,0,40,0"
+                            FontSize="27"
+                            BackgroundColor="{StaticResource ButtonColor1}"
+                            WidthRequest="{StaticResource Spiele.ButtonWidth}"
+                            HeightRequest="{StaticResource Spiele.ButtonHeight}"
+                            AbsoluteLayout.LayoutBounds="0,70"
+                        />
+                        <Button Text="Picolo Klon"
+                            TextColor="White"
+                            Margin="0,0,40,0"
+                            FontSize="27"
+                            BackgroundColor="{StaticResource ButtonColor1}"
+                            WidthRequest="{StaticResource Spiele.ButtonWidth}"
+                            HeightRequest="{StaticResource Spiele.ButtonHeight}"
+                            AbsoluteLayout.LayoutBounds="0,140"
+                        />
+                        <Button Text="Wahrheit, Wahl, oder Pflicht"
+                            TextColor="White"
+                            Margin="0,0,40,0"
+                            FontSize="18"
+                            BackgroundColor="{StaticResource ButtonColor1}"
+                            WidthRequest="{StaticResource Spiele.ButtonWidth}"
+                            HeightRequest="{StaticResource Spiele.ButtonHeight}"
+                            AbsoluteLayout.LayoutBounds="0,210"
+                        />
+                        <Button Text="7 Minutes in Heaven"
+                            TextColor="White"
+                            Margin="0,0,40,0"
+                            FontSize="25"
+                            BackgroundColor="{StaticResource ButtonColor1}"
+                            WidthRequest="{StaticResource Spiele.ButtonWidth}"
+                            HeightRequest="{StaticResource Spiele.ButtonHeight}"
+                            AbsoluteLayout.LayoutBounds="0,280"
+                        />
+                        <Button Text="Bin ich betrunken?"
+                            TextColor="White"
+                            Margin="0,0,40,0"
+                            FontSize="27"
+                            BackgroundColor="{StaticResource ButtonColor1}"
+                            WidthRequest="{StaticResource Spiele.ButtonWidth}"
+                            HeightRequest="{StaticResource Spiele.ButtonHeight}"
+                            AbsoluteLayout.LayoutBounds="0,350"
+                        />
+                        <Button Text="Cocktail Mischen"
+                            TextColor="White"
+                            Margin="0,0,40,0"
+                            FontSize="27"
+                            BackgroundColor="{StaticResource ButtonColor1}"
+                            WidthRequest="{StaticResource Spiele.ButtonWidth}"
+                            HeightRequest="{StaticResource Spiele.ButtonHeight}"
+                            AbsoluteLayout.LayoutBounds="0,420"
+                        />
+                        <Button Text="Ausnüchtern"
+                            TextColor="White"
+                            Margin="0,0,40,0"
+                            FontSize="27"
+                            BackgroundColor="{StaticResource ButtonColor1}"
+                            WidthRequest="{StaticResource Spiele.ButtonWidth}"
+                            HeightRequest="{StaticResource Spiele.ButtonHeight}"
+                            AbsoluteLayout.LayoutBounds="0,490"
+                        />
+                        <Button Text="Würfel Brettspiel"
+                            TextColor="White"
+                            Margin="0,0,40,0"
+                            FontSize="27"
+                            BackgroundColor="{StaticResource ButtonColor1}"
+                            WidthRequest="{StaticResource Spiele.ButtonWidth}"
+                            HeightRequest="{StaticResource Spiele.ButtonHeight}"
+                            AbsoluteLayout.LayoutBounds="0,560"
+                        />
+                        <Button Text="Horoskop"
+                            TextColor="White"
+                            Margin="0,0,40,0"
+                            FontSize="27"
+                            BackgroundColor="{StaticResource ButtonColor1}"
+                            WidthRequest="{StaticResource Spiele.ButtonWidth}"
+                            HeightRequest="{StaticResource Spiele.ButtonHeight}"
+                            AbsoluteLayout.LayoutBounds="0,630"
+                        />
+                        <Button Text="Wer weiß was?"
+                            TextColor="White"
+                            Margin="0,0,40,0"
+                            FontSize="27"
+                            BackgroundColor="{StaticResource ButtonColor1}"
+                            WidthRequest="{StaticResource Spiele.ButtonWidth}"
+                            HeightRequest="{StaticResource Spiele.ButtonHeight}"
+                            AbsoluteLayout.LayoutBounds="0,700"
+                        />
+                        <Button Text="Wer kennt wen am Besten?"
+                            TextColor="White"
+                            Margin="0,0,40,0"
+                            FontSize="20"
+                            BackgroundColor="{StaticResource ButtonColor1}"
+                            WidthRequest="{StaticResource Spiele.ButtonWidth}"
+                            HeightRequest="{StaticResource Spiele.ButtonHeight}"
+                            AbsoluteLayout.LayoutBounds="0,770"
+                        />
+                        <Button Text="Ist das Normal?"
+                            TextColor="White"
+                            Margin="0,0,40,0"
+                            FontSize="27"
+                            BackgroundColor="{StaticResource ButtonColor1}"
+                            WidthRequest="{StaticResource Spiele.ButtonWidth}"
+                            HeightRequest="{StaticResource Spiele.ButtonHeight}"
+                            AbsoluteLayout.LayoutBounds="0,840"
+                        />
+                        <Button Text="Allgemeinwissensfragen"
+                            TextColor="White"
+                            Margin="0,0,40,0"
+                            FontSize="21"
+                            BackgroundColor="{StaticResource ButtonColor1}"
+                            WidthRequest="{StaticResource Spiele.ButtonWidth}"
+                            HeightRequest="{StaticResource Spiele.ButtonHeight}"
+                            AbsoluteLayout.LayoutBounds="0,910"
+                        />
+                        <Button Text="Mischen"
+                            TextColor="White"
+                            FontSize="27"
+                            Margin="0,0,40,0"
+                            BackgroundColor="{StaticResource ButtonColor1}"
+                            WidthRequest="{StaticResource Spiele.ButtonWidth}"
+                            HeightRequest="{StaticResource Spiele.ButtonHeight}"
+                            AbsoluteLayout.LayoutBounds="0,980"
+                        />
+                    </AbsoluteLayout>
+                </ScrollView>
+            </RelativeLayout>
+        </local:SwipeContainer>
+    </ContentPage.Content>
+</ContentPage>

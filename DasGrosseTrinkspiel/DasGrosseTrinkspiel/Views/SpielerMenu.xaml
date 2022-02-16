@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DasGrosseTrinkspiel.Views.SpielerMenu"
+             xmlns:local="clr-namespace:DasGrosseTrinkspiel.Extentions"
+             x:Name="Page">
+    <ContentPage.Content>
+        <local:SwipeContainer Swipe="OnSwiped">
+            <StackLayout BackgroundColor="{StaticResource PrimaryBackground}">
+                <Label Text="Spieler" 
+                TextColor="White"
+                FontSize="50"
+                HorizontalOptions="Center"
+                Padding="0,20,0,0"
+                />
+
+                <Grid Margin="40,0,40,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="6*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Entry x:Name="m_tbxName" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" WidthRequest="50"/>
+                    <Picker x:Name="m_cmbxGender" Title="Geschlecht" ItemsSource="{Binding Genders}" SelectedItem="Männlich" 
+                        Grid.Column="0"
+                        Grid.Row="1"/>
+                    <Button x:Name="m_btnAdd" Text="Hinzufügen" Grid.Row="1" Grid.Column="1" Clicked="m_btnAdd_Clicked" />
+                    <CollectionView 
+                        x:Name="m_lbxSpieler"
+                        Margin="0,30,0,0"
+                        Grid.ColumnSpan="2"
+                        Grid.Row="2"
+                        ItemsSource="{Binding Gamers}"
+                        BackgroundColor="{StaticResource GridColor1}" >
+
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="3*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Text="{Binding Name}"
+                                           x:Name="m_lblText"
+                                           FontSize="30"
+                                           Grid.Column="0"/>
+                                    <Button Text="X"
+                                            x:Name="m_btnDelete"
+                                            FontSize="20"
+                                            Grid.Column="1"
+                                            BackgroundColor="Transparent"
+                                            Clicked="m_btnDelete_Clicked"/>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Grid>
+            </StackLayout>
+        </local:SwipeContainer>
+    </ContentPage.Content>
+</ContentPage>
