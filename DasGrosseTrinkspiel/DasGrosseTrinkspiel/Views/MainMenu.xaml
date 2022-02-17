@@ -9,16 +9,18 @@
                    HorizontalTextAlignment="Center" 
                    TextColor="Black" 
                    FontSize="36"
-                   RelativeLayout.XConstraint="0"
-                   RelativeLayout.YConstraint="0"/>
+                   RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.05}"
+                   RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0}"/>
             <Image Source="{local:ImageResource DasGrosseTrinkspiel.Images.Logo.jpg}"
                        Aspect="AspectFit"
                        BackgroundColor="Transparent" 
                        HorizontalOptions="Center"
-                       RelativeLayout.YConstraint="500"/>
+                       RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0.1}"
+                       RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.25}"/>
 
             <Grid RowSpacing="20" BackgroundColor="{StaticResource GridColor1}" Padding="20,0,20,0"
-                  RelativeLayout.YConstraint="250">
+                  RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0.5}"
+                  RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="20" />
                     <RowDefinition Height="Auto" />

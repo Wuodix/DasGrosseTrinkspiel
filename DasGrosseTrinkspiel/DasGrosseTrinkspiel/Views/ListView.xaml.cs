@@ -1,5 +1,7 @@
-﻿using System;
+﻿using DasGrosseTrinkspiel.Classes;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -25,9 +27,20 @@ namespace DasGrosseTrinkspiel.Views
             App.Current.MainPage = new SpielerMenu();
         }
 
-        private void m_btnChoose_Clicked(object sender, EventArgs e)
+        private async void m_btnChoose_Clicked(object sender, EventArgs e)
         {
-            //Wenn database da daraus auslesen
+            var getspieler = await ClsDatabase.GetSpieler((m_lbxListen.SelectedItem as Spielerliste).Id);
+
+            int i = 0;
+            ObservableCollection<Spieler> spielers = new ObservableCollection<Spieler>();
+            foreach (Spieler spieler in getspieler)
+            {
+                spielers.Add(getspieler[i]);
+                i++;
+            }
+
+            SpielerMenu.SpielerviewModel.Gamers = spielers;
+            App.Current.MainPage = new SpielerMenu();
         }
 
         private void m_btnDelete_Clicked(object sender, EventArgs e)

@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.Diagnostics;
+using DasGrosseTrinkspiel.Classes;
 
 namespace DasGrosseTrinkspiel.Views
 {
     public partial class SpielerMenu : ContentPage
     {
         static ViewModels.ListViewViewModel ListViewModel;
-        readonly ViewModels.SpielerMenuViewModel viewModel;
+        static ViewModels.SpielerMenuViewModel viewModel;
         public SpielerMenu()
         {
             InitializeComponent();
@@ -23,6 +24,7 @@ namespace DasGrosseTrinkspiel.Views
         }
 
         public static ViewModels.ListViewViewModel ListviewviewModel { get { return ListViewModel; } set { } }
+        public static ViewModels.SpielerMenuViewModel SpielerviewModel { get { return viewModel; } set { } }
 
         private void OnSwiped(object sender, SwipedEventArgs e)
         {
@@ -35,19 +37,20 @@ namespace DasGrosseTrinkspiel.Views
             }
         }
 
-        private void m_btnAdd_Clicked(object sender, EventArgs e)
+        private async void m_btnAdd_Clicked(object sender, EventArgs e)
         {
             //wenn Datenbank da einführen, dass man nicht 2 gleichnamige Listen erstellen darf
             //Listen sofort in Datenbank speichern
             if(m_tbxName.Text != null && m_cmbxGender.SelectedItem != null)
             {
-                Classes.Spieler spieler = new Classes.Spieler
+                Spieler spieler = new Spieler
                 {
                     Name = m_tbxName.Text,
                     Geschlecht = m_cmbxGender.SelectedItem.ToString()
                 };
 
                 viewModel.Gamers.Add(spieler);
+                await ClsDatabase.AddSpieler(m_tbxName.Text, m_cmbxGender.SelectedItem.ToString(), ListViewModel.SpielerlistenListe.Count);
 
                 m_tbxName.Text = null;
                 m_cmbxGender.SelectedItem = null;
@@ -64,9 +67,9 @@ namespace DasGrosseTrinkspiel.Views
             viewModel.Gamers.Remove(FindSpieler(text));
         }
 
-        private Classes.Spieler FindSpieler(string name)
+        private Spieler FindSpieler(string name)
         {
-            foreach(Classes.Spieler spieler in viewModel.Gamers)
+            foreach(Spieler spieler in viewModel.Gamers)
             {
                 if(spieler.Name == name)
                 {
@@ -87,16 +90,16 @@ namespace DasGrosseTrinkspiel.Views
             App.Current.MainPage = new ListView();
         }
 
-        private void m_btnAddListe_Clicked(object sender, EventArgs e)
+        private async void m_btnAddListe_Clicked(object sender, EventArgs e)
         {
             // Nach Dialogfeld in xamarin googeln und zum Namen bekommen nutzen
 
-            Classes.Spielerliste spielerliste = new Classes.Spielerliste
+            Spielerliste spielerliste = new Spielerliste
             {
-                SpielerListe = viewModel.Gamers.ToList(),
-                Name = "test"
+                Name = await App.Current.MainPage.DisplayPromptAsync("Listenname", "Bitte gib den Listennamen ein!")
             };
 
+            viewModel.Gamers.Clear();
             ListviewviewModel.SpielerlistenListe.Add(spielerliste);
         }
     }
