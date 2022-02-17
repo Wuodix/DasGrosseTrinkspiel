@@ -5,60 +5,65 @@
              xmlns:local="clr-namespace:DasGrosseTrinkspiel.Extentions">
     <ContentPage.Content>
         <local:SwipeContainer Swipe="OnSwiped">
-            <RelativeLayout BackgroundColor="{StaticResource PrimaryBackground}" Padding="0,20,0,20">
+            <StackLayout BackgroundColor="{StaticResource PrimaryBackground}">
+                <Button
+                        x:Name="m_btnBack"
+                        Clicked="m_btnBack_Clicked"
+                        BackgroundColor="Transparent"
+                        Text="Back"
+                        FontSize="16"
+                        Padding="0,-5,0,0"
+                        Margin="0,5,0,0"
+                        HeightRequest="20"
+                        HorizontalOptions="Start"
+                />
                 <Label Text="Zufallsgeneratoren" 
                         TextColor="White"
                         FontSize="35"
                         HorizontalOptions="Center"
-                        Padding="0,28,0,0"
-                        RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.1}"
-                        RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.8}"/>
-                <Button Text="Zufallsrad"
-                        Margin="20,0,20,0"
-                        TextColor="White"
-                        FontSize="27"
-                        BackgroundColor="{StaticResource ButtonColor1}"
-                        RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.0}"
-                        RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0.15}"
-                        RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+                        Padding="0,-10,0,0"
+                       />
+                <ScrollView Margin="40,0,0,0">
+                    <AbsoluteLayout>
+                        <Button Text="Zufallsrad"
+                            Margin="0,0,40,0"
+                            TextColor="White"
+                            FontSize="27"
+                            BackgroundColor="{StaticResource ButtonColor1}"
+                            WidthRequest="{StaticResource Spiele.ButtonWidth}"
+                            HeightRequest="{StaticResource Spiele.ButtonHeight}"
+                            AbsoluteLayout.LayoutBounds="0,0"
                         />
-                <Button Text="Zufalls Team Generator"
-                        Margin="20,0,20,0"
-                        TextColor="White"
-                        FontSize="24"
-                        BackgroundColor="{StaticResource ButtonColor1}"
-                        RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.0}"
-                        RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0.25}"
-                        RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+                        <Button Text="Zufalls Team Generator"
+                            Margin="0,0,40,0"
+                            TextColor="White"
+                            FontSize="23"
+                            BackgroundColor="{StaticResource ButtonColor1}"
+                            WidthRequest="{StaticResource Spiele.ButtonWidth}"
+                            HeightRequest="{StaticResource Spiele.ButtonHeight}"
+                            AbsoluteLayout.LayoutBounds="0,70"
                         />
-                <Button Text="Zufallszahl"
-                        Margin="20,0,20,0"
-                        TextColor="White"
-                        FontSize="27"
-                        BackgroundColor="{StaticResource ButtonColor1}"
-                        RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.0}"
-                        RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0.35}"
-                        RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+                        <Button Text="Zufallszahl"
+                            Margin="0,0,40,0"
+                            TextColor="White"
+                            FontSize="27"
+                            BackgroundColor="{StaticResource ButtonColor1}"
+                            WidthRequest="{StaticResource Spiele.ButtonWidth}"
+                            HeightRequest="{StaticResource Spiele.ButtonHeight}"
+                            AbsoluteLayout.LayoutBounds="0,140"
                         />
-                <Button Text="Würfel"
-                        Margin="20,0,20,0"
-                        TextColor="White"
-                        FontSize="27"
-                        BackgroundColor="{StaticResource ButtonColor1}"
-                        RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.0}"
-                        RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0.35}"
-                        RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+                        <Button Text="Würfel"
+                            Margin="0,0,40,0"
+                            TextColor="White"
+                            FontSize="27"
+                            BackgroundColor="{StaticResource ButtonColor1}"
+                            WidthRequest="{StaticResource Spiele.ButtonWidth}"
+                            HeightRequest="{StaticResource Spiele.ButtonHeight}"
+                            AbsoluteLayout.LayoutBounds="0,210"
                         />
-                <Button Text="Back"
-                        x:Name="m_btnBack"
-                        Clicked="m_btnBack_Clicked"
-                        TextColor="White"
-                        FontSize="27"
-                        BackgroundColor="{StaticResource ButtonColor1}"
-                        RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.03}"
-                        RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0.92}"
-                        />
-            </RelativeLayout>
+                    </AbsoluteLayout>
+                </ScrollView>
+            </StackLayout>
         </local:SwipeContainer>
     </ContentPage.Content>
 </ContentPage>

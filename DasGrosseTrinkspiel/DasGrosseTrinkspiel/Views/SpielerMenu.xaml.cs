@@ -12,13 +12,17 @@ namespace DasGrosseTrinkspiel.Views
 {
     public partial class SpielerMenu : ContentPage
     {
+        static ViewModels.ListViewViewModel ListViewModel;
         readonly ViewModels.SpielerMenuViewModel viewModel;
         public SpielerMenu()
         {
             InitializeComponent();
             
             BindingContext = viewModel = new ViewModels.SpielerMenuViewModel();
+            ListViewModel = new ViewModels.ListViewViewModel();
         }
+
+        public static ViewModels.ListViewViewModel ListviewviewModel { get { return ListViewModel; } set { } }
 
         private void OnSwiped(object sender, SwipedEventArgs e)
         {
@@ -33,6 +37,8 @@ namespace DasGrosseTrinkspiel.Views
 
         private void m_btnAdd_Clicked(object sender, EventArgs e)
         {
+            //wenn Datenbank da einführen, dass man nicht 2 gleichnamige Listen erstellen darf
+            //Listen sofort in Datenbank speichern
             if(m_tbxName.Text != null && m_cmbxGender.SelectedItem != null)
             {
                 Classes.Spieler spieler = new Classes.Spieler
@@ -69,6 +75,29 @@ namespace DasGrosseTrinkspiel.Views
             }
 
             return null;
+        }
+
+        private void m_btnBack_Clicked(object sender, EventArgs e)
+        {
+            App.Current.MainPage = new MainMenu();
+        }
+
+        private void m_btnListen_Clicked(object sender, EventArgs e)
+        {
+            App.Current.MainPage = new ListView();
+        }
+
+        private void m_btnAddListe_Clicked(object sender, EventArgs e)
+        {
+            // Nach Dialogfeld in xamarin googeln und zum Namen bekommen nutzen
+
+            Classes.Spielerliste spielerliste = new Classes.Spielerliste
+            {
+                SpielerListe = viewModel.Gamers.ToList(),
+                Name = "test"
+            };
+
+            ListviewviewModel.SpielerlistenListe.Add(spielerliste);
         }
     }
 }

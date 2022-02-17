@@ -5,30 +5,30 @@
              xmlns:local="clr-namespace:DasGrosseTrinkspiel.Extentions">
     <ContentPage.Content>
         <local:SwipeContainer Swipe="OnSwipe">
-            <RelativeLayout BackgroundColor="{StaticResource PrimaryBackground}">
-                <Label Text="Spiele" 
-                        TextColor="White"
-                        FontSize="50"
-                        Padding="0,20,0,0"
-                        RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0}"
-                        RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.32}"
-                />
+            <StackLayout BackgroundColor="{StaticResource PrimaryBackground}">
                 <Button
                         x:Name="m_btnBack"
                         Clicked="m_btnBack_Clicked"
                         BackgroundColor="Transparent"
                         Text="Back"
                         FontSize="16"
-                        RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=-0.02}"
-                        RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0}"
+                        Padding="0,-5,0,0"
+                        Margin="0,5,0,0"
+                        HeightRequest="20"
+                        HorizontalOptions="Start"
                 />
-                <ScrollView Margin="40,0,0,0"
-                        RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.0}"
-                        RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0.13}">
+                <Label Text="Spiele" 
+                        TextColor="White"
+                        BackgroundColor="Transparent"
+                        FontSize="50"
+                        Padding="0,-17,0,0"
+                        HorizontalOptions="Center"
+                />
+                <ScrollView Margin="40,0,0,0">
                     <ScrollView.GestureRecognizers>
                         <SwipeGestureRecognizer Direction="Right" Swiped="OnSwipe" />
                     </ScrollView.GestureRecognizers>
-                    <AbsoluteLayout BackgroundColor="Transparent" HeightRequest="1250">
+                    <AbsoluteLayout BackgroundColor="Transparent">
                         <AbsoluteLayout.GestureRecognizers>
                             <SwipeGestureRecognizer Direction="Right" Swiped="OnSwipe" />
                         </AbsoluteLayout.GestureRecognizers>
@@ -161,7 +161,7 @@
                         <Button Text="Mischen"
                             TextColor="White"
                             FontSize="27"
-                            Margin="0,0,40,0"
+                            Margin="0,0,40,25"
                             BackgroundColor="{StaticResource ButtonColor1}"
                             WidthRequest="{StaticResource Spiele.ButtonWidth}"
                             HeightRequest="{StaticResource Spiele.ButtonHeight}"
@@ -169,7 +169,7 @@
                         />
                     </AbsoluteLayout>
                 </ScrollView>
-            </RelativeLayout>
+            </StackLayout>
         </local:SwipeContainer>
     </ContentPage.Content>
 </ContentPage>
