@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
@@ -13,7 +14,8 @@ namespace DasGrosseTrinkspiel.Classes
     {
         static SQLiteAsyncConnection Spielerdb;
         static SQLiteAsyncConnection Fragendb;
-        static async Task Init()
+        static public int Listprimarykey { get; set; }
+        public static async Task Init()
         {
             if (Spielerdb != null)
                 return;
@@ -30,9 +32,18 @@ namespace DasGrosseTrinkspiel.Classes
             await Spielerdb.CreateTableAsync<Spieler>();
             await Spielerdb.CreateTableAsync<Spielerliste>();
             //Fragen Tables sind noch nicht erstellt (weil es gibt noch keine Klassen dafür)
+
+            try
+            {
+                Listprimarykey = (await GetAllSpielerlisten()).LastOrDefault().Id+1;
+            }
+            catch
+            {
+                Listprimarykey = 0;
+            }
         }
 
-        public static async Task AddSpieler(string name, string Geschlecht, int Listennummer)
+        public static async Task<int> AddSpieler(string name, string Geschlecht)
         {
             await Init();
 
@@ -40,10 +51,13 @@ namespace DasGrosseTrinkspiel.Classes
             {
                 Name = name,
                 Geschlecht = Geschlecht,
-                Listennummer = Listennummer
+                Listennummer = Listprimarykey
             };
 
+            Debug.WriteLine("SpielerListennummer: " + spieler.Listennummer);
+
             int id = await Spielerdb.InsertAsync(spieler);
+            return id;
         } 
 
         public static async Task DeleteSpieler(int id)
@@ -59,10 +73,18 @@ namespace DasGrosseTrinkspiel.Classes
 
             var query = Spielerdb.Table<Spieler>().Where(x => x.Listennummer.Equals(Listid));
 
-            //die Listennummer /anzahl muss beim erstellen der Spieler ausgelesen werden um zu wissen welche Listennummer zugewiesen werden muss
             var Spielerreturn = await query.ToListAsync();
-            Debug.WriteLine(Spielerreturn[0]);
+
             return Spielerreturn;
+        }
+
+        public static async Task<List<Spieler>> GetAllSpieler()
+        {
+            await Init();
+
+            var Spielers = await Spielerdb.Table<Spieler>().ToListAsync();
+
+            return Spielers;
         }
 
 
@@ -76,6 +98,9 @@ namespace DasGrosseTrinkspiel.Classes
             };
 
             await Spielerdb.InsertAsync(spielerliste);
+            Listprimarykey = spielerliste.Id+1;
+
+            Debug.WriteLine(spielerliste.Id);
         }
 
         public static async Task DeleteSpielerliste(int id)
@@ -85,11 +110,20 @@ namespace DasGrosseTrinkspiel.Classes
             await Spielerdb.DeleteAsync<Spielerliste>(id);
         }
 
-        public static async Task<Spielerliste> GetSpielerliste(int Listid)
+        public static async Task DeleteEverything()
         {
             await Init();
 
-            var Spielerliste = await Spielerdb.GetAsync<Spielerliste>(Listid);
+            Debug.WriteLine("Deleted from Spieler: " + await Spielerdb.DeleteAllAsync<Spieler>());
+            Debug.WriteLine("Deleted from Listen: " + await Spielerdb.DeleteAllAsync<Spielerliste>());
+        }
+
+        public static async Task<List<Spielerliste>> GetAllSpielerlisten()
+        {
+            await Init();
+
+            var Spielerliste = await Spielerdb.Table<Spielerliste>().ToListAsync();
+
             return Spielerliste;
         }
     }

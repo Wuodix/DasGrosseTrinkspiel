@@ -5,7 +5,9 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -14,12 +16,38 @@ namespace DasGrosseTrinkspiel.Views
 {
     public partial class ListView : ContentPage
     {
-        ViewModels.ListViewViewModel ViewModel;
+        static ViewModels.ListViewViewModel ViewModel;
         public ListView()
         {
             InitializeComponent();
 
             BindingContext = ViewModel = SpielerMenu.ListviewviewModel;
+
+            InitSpielerLists();
+        }
+
+        private void OnSwipe(object sender, SwipedEventArgs e)
+        {
+            switch (e.Direction)
+            {
+                case SwipeDirection.Right:
+                    App.Current.MainPage = new SpielerMenu();
+                    break;
+            }
+        }
+
+        private static async Task<bool> InitSpielerLists()
+        {
+            var temp = await ClsDatabase.GetAllSpielerlisten();
+            ViewModel.SpielerlistenListe.Clear();
+
+            foreach (Spielerliste spl in temp)
+            {
+                ViewModel.SpielerlistenListe.Add(spl);
+                Debug.WriteLine(spl.ToString());
+            }
+
+            return true;
         }
 
         private void m_btnBack_Clicked(object sender, EventArgs e)
@@ -29,28 +57,42 @@ namespace DasGrosseTrinkspiel.Views
 
         private async void m_btnChoose_Clicked(object sender, EventArgs e)
         {
-            var getspieler = await ClsDatabase.GetSpieler((m_lbxListen.SelectedItem as Spielerliste).Id);
-
-            int i = 0;
-            ObservableCollection<Spieler> spielers = new ObservableCollection<Spieler>();
-            foreach (Spieler spieler in getspieler)
+            if(m_lbxListen.SelectedItem != null)
             {
-                spielers.Add(getspieler[i]);
-                i++;
+                var getspieler = await ClsDatabase.GetSpieler((m_lbxListen.SelectedItem as Spielerliste).Id);
+                ClsDatabase.Listprimarykey = (m_lbxListen.SelectedItem as Spielerliste).Id;
+
+                SpielerMenu.SpielerviewModel.Gamers.Clear();
+
+                Debug.WriteLine("Spieleranzahl btn Choose: " + getspieler.Count);
+                foreach (Spieler spieler in getspieler)
+                {
+                    SpielerMenu.SpielerviewModel.Gamers.Add(spieler);
+                    Debug.WriteLine("2"+spieler.ToString());
+                }
+
+                App.Current.MainPage = new SpielerMenu();
+            }
+        }
+
+        private async void m_btnDelete_Clicked(object sender, EventArgs e)
+        {
+            if(m_lbxListen.SelectedItem != null)
+            {
+                await ClsDatabase.DeleteSpielerliste(FindList(m_lbxListen.SelectedItem.ToString()).Id);
+                ViewModel.SpielerlistenListe.Remove(FindList(m_lbxListen.SelectedItem.ToString()));
             }
 
-            SpielerMenu.SpielerviewModel.Gamers = spielers;
-            App.Current.MainPage = new SpielerMenu();
+            await Refresh();
         }
 
-        private void m_btnDelete_Clicked(object sender, EventArgs e)
+        private async void m_btnDeleteAll_Clicked(object sender, EventArgs e)
         {
-            //Wenn database da daraus löschen
-            ViewModel.SpielerlistenListe.Remove(FindList(m_lbxListen.SelectedItem.ToString()));
+            await ClsDatabase.DeleteEverything();
         }
-        private Classes.Spielerliste FindList(string name)
+        private Spielerliste FindList(string name)
         {
-            foreach (Classes.Spielerliste liste in ViewModel.SpielerlistenListe)
+            foreach (Spielerliste liste in ViewModel.SpielerlistenListe)
             {
                 if (liste.Name == name)
                 {
@@ -59,6 +101,25 @@ namespace DasGrosseTrinkspiel.Views
             }
 
             return null;
+        }
+
+        private async Task Refresh()
+        {
+            SpielerMenu.SpielerviewModel.Gamers.Clear();
+            List<Spieler> sps = await ClsDatabase.GetAllSpieler();
+
+            foreach(Spieler sp in sps)
+            {
+                SpielerMenu.SpielerviewModel.Gamers.Add(sp);
+            }
+
+            SpielerMenu.ListviewviewModel.SpielerlistenListe.Clear();
+            List<Spielerliste> spls = await ClsDatabase.GetAllSpielerlisten();
+
+            foreach(Spielerliste spl in spls)
+            {
+                SpielerMenu.ListviewviewModel.SpielerlistenListe.Add(spl);
+            }
         }
     }
 }

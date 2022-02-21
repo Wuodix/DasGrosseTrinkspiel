@@ -1,10 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="DasGrosseTrinkspiel.Views.ListView">
+             x:Class="DasGrosseTrinkspiel.Views.ListView"
+             xmlns:local="clr-namespace:DasGrosseTrinkspiel.Extentions">
     <ContentPage.Content>
-        <StackLayout BackgroundColor="{StaticResource PrimaryBackground}">
-            <Button
+        <local:SwipeContainer Swipe="OnSwipe">
+            <StackLayout BackgroundColor="{StaticResource PrimaryBackground}">
+                <Button
                         x:Name="m_btnBack"
                         Clicked="m_btnBack_Clicked"
                         BackgroundColor="Transparent"
@@ -15,41 +17,42 @@
                         HeightRequest="20"
                         HorizontalOptions="Start"
             />
-            <Label Text="Spielerlisten" 
+                <Label Text="Spielerlisten" 
                         TextColor="White"
                         BackgroundColor="Transparent"
                         FontSize="50"
                         Padding="0,-15,0,0"
                         HorizontalOptions="Center"
             />
-            <Grid Margin="40,10,40,10">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="7*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+                <Grid Margin="40,10,40,10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="7*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-                <CollectionView 
+                    <CollectionView 
                         x:Name="m_lbxListen"
                         Margin="0,0,0,20"
-                        Grid.ColumnSpan="2"
+                        Grid.ColumnSpan="3"
                         Grid.Row="0"
                         ItemsSource="{Binding SpielerlistenListe}"
                         BackgroundColor="{StaticResource GridColor1}" 
                         SelectionMode="Single">
 
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Label Text="{Binding Name}"
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Label Text="{Binding Name}"
                                x:Name="m_lblText"
                                FontSize="30"/>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-                <Button Text="Auswählen"
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                    <Button Text="Auswählen"
                             x:Name="m_btnChoose"
                             FontSize="16"
                             Grid.Column="0"
@@ -57,7 +60,7 @@
                             Margin="0,0,0,20"
                             Clicked="m_btnChoose_Clicked"
                             BackgroundColor="{StaticResource ButtonColor1}"/>
-                <Button Text="Löschen"
+                    <Button Text="Löschen"
                             x:Name="m_btnDelete"
                             FontSize="16"
                             Grid.Column="1"
@@ -65,7 +68,16 @@
                             Margin="0,0,0,20"
                             Clicked="m_btnDelete_Clicked"
                             BackgroundColor="{StaticResource ButtonColor1}"/>
-            </Grid>
-        </StackLayout>
+                    <Button Text="Alles Löschen"
+                            x:Name="m_btnDeleteAll"
+                            FontSize="16"
+                            Grid.Column="2"
+                            Grid.Row="1"
+                            Margin="0,0,0,20"
+                            Clicked="m_btnDeleteAll_Clicked"
+                            BackgroundColor="{StaticResource ButtonColor1}"/>
+                </Grid>
+            </StackLayout>
+        </local:SwipeContainer>
     </ContentPage.Content>
 </ContentPage>
