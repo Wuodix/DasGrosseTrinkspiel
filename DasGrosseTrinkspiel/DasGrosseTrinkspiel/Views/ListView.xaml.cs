@@ -57,10 +57,12 @@ namespace DasGrosseTrinkspiel.Views
 
         private async void m_btnChoose_Clicked(object sender, EventArgs e)
         {
+            // nach dem Auswählen wird ClsDatabase.Listprimarykey nicht wieder auf die Id der letzten Liste gestellt
             if(m_lbxListen.SelectedItem != null)
             {
                 var getspieler = await ClsDatabase.GetSpieler((m_lbxListen.SelectedItem as Spielerliste).Id);
                 ClsDatabase.Listprimarykey = (m_lbxListen.SelectedItem as Spielerliste).Id;
+                Debug.WriteLine("primary Key aus btn Choose: " + ClsDatabase.Listprimarykey);
 
                 SpielerMenu.SpielerviewModel.Gamers.Clear();
 
@@ -80,15 +82,20 @@ namespace DasGrosseTrinkspiel.Views
             if(m_lbxListen.SelectedItem != null)
             {
                 await ClsDatabase.DeleteSpielerliste(FindList(m_lbxListen.SelectedItem.ToString()).Id);
-                ViewModel.SpielerlistenListe.Remove(FindList(m_lbxListen.SelectedItem.ToString()));
-            }
 
-            await Refresh();
+                await Refresh();
+            }
         }
 
         private async void m_btnDeleteAll_Clicked(object sender, EventArgs e)
         {
-            await ClsDatabase.DeleteEverything();
+            bool answer = await DisplayAlert("Verifizierung", "Willst du wirklich alle Einträge aus der Datenbank löschen?", "Ja", "Nein");
+            if (answer)
+            {
+                await ClsDatabase.DeleteEverything();
+
+                await Refresh();
+            }
         }
         private Spielerliste FindList(string name)
         {
@@ -106,7 +113,7 @@ namespace DasGrosseTrinkspiel.Views
         private async Task Refresh()
         {
             SpielerMenu.SpielerviewModel.Gamers.Clear();
-            List<Spieler> sps = await ClsDatabase.GetAllSpieler();
+            List<Spieler> sps = await ClsDatabase.GetSpieler(ClsDatabase.Listprimarykey);
 
             foreach(Spieler sp in sps)
             {

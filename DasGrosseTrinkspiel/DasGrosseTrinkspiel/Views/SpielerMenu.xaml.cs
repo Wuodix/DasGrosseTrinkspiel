@@ -53,8 +53,6 @@ namespace DasGrosseTrinkspiel.Views
 
         private async void m_btnAdd_Clicked(object sender, EventArgs e)
         {
-            //wenn Datenbank da einführen, dass man nicht 2 gleichnamige Listen erstellen darf
-            //Listen sofort in Datenbank speichern
             if(m_tbxName.Text != null && m_cmbxGender.SelectedItem != null)
             {
                 Spieler spieler = new Spieler
@@ -109,26 +107,59 @@ namespace DasGrosseTrinkspiel.Views
 
         private async void m_btnAddListe_Clicked(object sender, EventArgs e)
         {
-            if(!(await ListeGibtsSchon()))
+            if(viewModel.Gamers.Count != 0)
             {
-                string temp = await App.Current.MainPage.DisplayPromptAsync("Listenname", "Bitte gib den Listennamen ein!");
-
-                if(temp != null)
+                bool tempbool = true; //Ist dafür da zu schaun ob das Speichern "abgebrochen" wurde (gibt bereits eine Liste mit dem Namen) dann darf der ListPrimaryKey nicht erhöht werden
+                if (!(await ListeGibtsSchon()))
                 {
-                    Spielerliste spielerliste = new Spielerliste
+                    string temp = await App.Current.MainPage.DisplayPromptAsync("Listenname", "Bitte gib den Listennamen ein!");
+
+                    if (temp != null)
                     {
-                        Name = temp
-                    };
+                        if (await ListennamenGibtsSchon(temp)) { await DisplayAlert("Achtung", "Es gibt bereits eine Liste mit diesem Namen!", "OK"); tempbool = false; }
+                        else
+                        {
+                            Spielerliste spielerliste = new Spielerliste
+                            {
+                                Name = temp
+                            };
 
-                    await ClsDatabase.AddSpielerliste(spielerliste.Name);
+                            await ClsDatabase.AddSpielerliste(spielerliste.Name);
 
+                            viewModel.Gamers.Clear();
+                        }
+                    }
+                }
+                else
+                {
                     viewModel.Gamers.Clear();
+                }
+
+                if (tempbool)
+                {
+                    ClsDatabase.Listprimarykey = (await ClsDatabase.GetAllSpielerlisten()).LastOrDefault().Id;
+                    ClsDatabase.Listprimarykey++;
                 }
             }
             else
             {
-                viewModel.Gamers.Clear();
+                await DisplayAlert("Achtung", "Bitte erstelle zuerst einen Spieler bevor du eine Liste erstellst!", "OK");
             }
+        }
+
+        private async Task<bool> ListennamenGibtsSchon(string name)
+        {
+            List<Spielerliste> spls = await ClsDatabase.GetAllSpielerlisten();
+
+            foreach(Spielerliste spielerliste in spls)
+            {
+                if(spielerliste.Name == name)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private async Task<bool> ListeGibtsSchon()
@@ -149,7 +180,7 @@ namespace DasGrosseTrinkspiel.Views
         private async Task Refresh()
         {
             SpielerviewModel.Gamers.Clear();
-            List<Spieler> sps = await ClsDatabase.GetAllSpieler();
+            List<Spieler> sps = await ClsDatabase.GetSpieler(ClsDatabase.Listprimarykey);
 
             foreach (Spieler sp in sps)
             {

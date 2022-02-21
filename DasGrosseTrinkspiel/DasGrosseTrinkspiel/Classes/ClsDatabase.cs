@@ -39,7 +39,7 @@ namespace DasGrosseTrinkspiel.Classes
             }
             catch
             {
-                Listprimarykey = 0;
+                Listprimarykey = 1;
             }
         }
 
@@ -59,6 +59,18 @@ namespace DasGrosseTrinkspiel.Classes
             int id = await Spielerdb.InsertAsync(spieler);
             return id;
         } 
+
+        private static async Task GetListPrimaryKey()
+        {
+            try
+            {
+                Listprimarykey = (await GetAllSpielerlisten()).LastOrDefault().Id;
+            }
+            catch
+            {
+                Listprimarykey = 1;
+            }
+        }
 
         public static async Task DeleteSpieler(int id)
         {
@@ -87,7 +99,6 @@ namespace DasGrosseTrinkspiel.Classes
             return Spielers;
         }
 
-
         public static async Task AddSpielerliste(string name)
         {
             await Init();
@@ -98,9 +109,9 @@ namespace DasGrosseTrinkspiel.Classes
             };
 
             await Spielerdb.InsertAsync(spielerliste);
-            Listprimarykey = spielerliste.Id+1;
+            Listprimarykey = spielerliste.Id;
 
-            Debug.WriteLine(spielerliste.Id);
+            Debug.WriteLine("SpielerlistenId: " + spielerliste.Id);
         }
 
         public static async Task DeleteSpielerliste(int id)
@@ -114,8 +125,13 @@ namespace DasGrosseTrinkspiel.Classes
         {
             await Init();
 
-            Debug.WriteLine("Deleted from Spieler: " + await Spielerdb.DeleteAllAsync<Spieler>());
-            Debug.WriteLine("Deleted from Listen: " + await Spielerdb.DeleteAllAsync<Spielerliste>());
+            Debug.WriteLine("Deleted from Spieler: " + await Spielerdb.DropTableAsync<Spieler>());
+            Debug.WriteLine("Deleted from Listen: " + await Spielerdb.DropTableAsync<Spielerliste>());
+
+            await Spielerdb.CreateTableAsync<Spieler>();
+            await Spielerdb.CreateTableAsync<Spielerliste>();
+
+            Listprimarykey = 1;
         }
 
         public static async Task<List<Spielerliste>> GetAllSpielerlisten()
