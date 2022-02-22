@@ -31,6 +31,7 @@ namespace DasGrosseTrinkspiel.Views
             switch (e.Direction)
             {
                 case SwipeDirection.Right:
+                    SpielerMenu.SpielerviewModel.Gamers.Clear();
                     App.Current.MainPage = new SpielerMenu();
                     break;
             }
@@ -52,6 +53,7 @@ namespace DasGrosseTrinkspiel.Views
 
         private void m_btnBack_Clicked(object sender, EventArgs e)
         {
+            SpielerMenu.SpielerviewModel.Gamers.Clear();
             App.Current.MainPage = new SpielerMenu();
         }
 
@@ -81,6 +83,7 @@ namespace DasGrosseTrinkspiel.Views
         {
             if(m_lbxListen.SelectedItem != null)
             {
+                await ClsDatabase.DeleteSpielerlistId(FindList(m_lbxListen.SelectedItem.ToString()).Id);
                 await ClsDatabase.DeleteSpielerliste(FindList(m_lbxListen.SelectedItem.ToString()).Id);
 
                 await Refresh();

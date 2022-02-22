@@ -79,6 +79,15 @@ namespace DasGrosseTrinkspiel.Classes
             await Spielerdb.DeleteAsync<Spieler>(id);
         }
 
+        public static async Task DeleteSpielerlistId(int ListenId)
+        {
+            await Init();
+
+            var query = Spielerdb.Table<Spieler>().Where(x => x.Listennummer.Equals(ListenId));
+
+            await query.DeleteAsync();
+        }
+
         public static async Task<List<Spieler>> GetSpieler(int Listid)
         {
             await Init();
