@@ -12,12 +12,12 @@ namespace DasGrosseTrinkspiel.Classes
 {
     internal class ClsDatabase
     {
-        static SQLiteAsyncConnection Spielerdb;
-        static SQLiteAsyncConnection Fragendb;
-        static public int Listprimarykey { get; set; }
-        public static async Task Init()
+        static SQLiteAsyncConnection m_spielerdb;
+        static SQLiteAsyncConnection m_fragendb;
+        static public int m_listprimarykey { get; set; }
+        private static async Task Init()
         {
-            if (Spielerdb != null)
+            if (m_spielerdb != null)
                 return;
 
             //Get Database Path
@@ -25,21 +25,21 @@ namespace DasGrosseTrinkspiel.Classes
             var FragendatabasePath = Path.Combine(FileSystem.AppDataDirectory, "FragenDatabase.db");
 
             //Create Connections
-            Spielerdb = new SQLiteAsyncConnection(SpielerdatabasePath);
-            Fragendb = new SQLiteAsyncConnection(FragendatabasePath);
+            m_spielerdb = new SQLiteAsyncConnection(SpielerdatabasePath);
+            m_fragendb = new SQLiteAsyncConnection(FragendatabasePath);
 
             //Create Tables
-            await Spielerdb.CreateTableAsync<Spieler>();
-            await Spielerdb.CreateTableAsync<Spielerliste>();
+            await m_spielerdb.CreateTableAsync<Spieler>();
+            await m_spielerdb.CreateTableAsync<Spielerliste>();
             //Fragen Tables sind noch nicht erstellt (weil es gibt noch keine Klassen dafür)
 
             try
             {
-                Listprimarykey = (await GetAllSpielerlisten()).LastOrDefault().Id+1;
+                m_listprimarykey = (await GetAllSpielerlisten()).LastOrDefault().Id+1;
             }
             catch
             {
-                Listprimarykey = 1;
+                m_listprimarykey = 1;
             }
         }
 
@@ -51,24 +51,24 @@ namespace DasGrosseTrinkspiel.Classes
             {
                 Name = name,
                 Geschlecht = Geschlecht,
-                Listennummer = Listprimarykey
+                Listennummer = m_listprimarykey
             };
 
             Debug.WriteLine("SpielerListennummer: " + spieler.Listennummer);
 
-            int id = await Spielerdb.InsertAsync(spieler);
+            int id = await m_spielerdb.InsertAsync(spieler);
             return id;
         } 
 
-        private static async Task GetListPrimaryKey()
+        public static async Task Getlistprimarykey()
         {
             try
             {
-                Listprimarykey = (await GetAllSpielerlisten()).LastOrDefault().Id;
+                m_listprimarykey = (await GetAllSpielerlisten()).LastOrDefault().Id;
             }
             catch
             {
-                Listprimarykey = 1;
+                m_listprimarykey = 1;
             }
         }
 
@@ -76,14 +76,14 @@ namespace DasGrosseTrinkspiel.Classes
         {
             await Init();
 
-            await Spielerdb.DeleteAsync<Spieler>(id);
+            await m_spielerdb.DeleteAsync<Spieler>(id);
         }
 
-        public static async Task DeleteSpielerlistId(int ListenId)
+        public static async Task DeleteSpielervonListe(int ListenId)
         {
             await Init();
 
-            var query = Spielerdb.Table<Spieler>().Where(x => x.Listennummer.Equals(ListenId));
+            var query = m_spielerdb.Table<Spieler>().Where(x => x.Listennummer.Equals(ListenId));
 
             await query.DeleteAsync();
         }
@@ -92,7 +92,7 @@ namespace DasGrosseTrinkspiel.Classes
         {
             await Init();
 
-            var query = Spielerdb.Table<Spieler>().Where(x => x.Listennummer.Equals(Listid));
+            var query = m_spielerdb.Table<Spieler>().Where(x => x.Listennummer.Equals(Listid));
 
             var Spielerreturn = await query.ToListAsync();
 
@@ -103,7 +103,7 @@ namespace DasGrosseTrinkspiel.Classes
         {
             await Init();
 
-            var Spielers = await Spielerdb.Table<Spieler>().ToListAsync();
+            var Spielers = await m_spielerdb.Table<Spieler>().ToListAsync();
 
             return Spielers;
         }
@@ -117,8 +117,8 @@ namespace DasGrosseTrinkspiel.Classes
                 Name = name
             };
 
-            await Spielerdb.InsertAsync(spielerliste);
-            Listprimarykey = spielerliste.Id;
+            await m_spielerdb.InsertAsync(spielerliste);
+            m_listprimarykey = spielerliste.Id;
 
             Debug.WriteLine("SpielerlistenId: " + spielerliste.Id);
         }
@@ -127,27 +127,27 @@ namespace DasGrosseTrinkspiel.Classes
         {
             await Init();
 
-            await Spielerdb.DeleteAsync<Spielerliste>(id);
+            await m_spielerdb.DeleteAsync<Spielerliste>(id);
         }
 
         public static async Task DeleteEverything()
         {
             await Init();
 
-            Debug.WriteLine("Deleted from Spieler: " + await Spielerdb.DropTableAsync<Spieler>());
-            Debug.WriteLine("Deleted from Listen: " + await Spielerdb.DropTableAsync<Spielerliste>());
+            Debug.WriteLine("Deleted from Spieler: " + await m_spielerdb.DropTableAsync<Spieler>());
+            Debug.WriteLine("Deleted from Listen: " + await m_spielerdb.DropTableAsync<Spielerliste>());
 
-            await Spielerdb.CreateTableAsync<Spieler>();
-            await Spielerdb.CreateTableAsync<Spielerliste>();
+            await m_spielerdb.CreateTableAsync<Spieler>();
+            await m_spielerdb.CreateTableAsync<Spielerliste>();
 
-            Listprimarykey = 1;
+            m_listprimarykey = 1;
         }
 
         public static async Task<List<Spielerliste>> GetAllSpielerlisten()
         {
             await Init();
 
-            var Spielerliste = await Spielerdb.Table<Spielerliste>().ToListAsync();
+            var Spielerliste = await m_spielerdb.Table<Spielerliste>().ToListAsync();
 
             return Spielerliste;
         }

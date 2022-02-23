@@ -2,9 +2,9 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DasGrosseTrinkspiel.Views.ListView"
-             xmlns:local="clr-namespace:DasGrosseTrinkspiel.Extentions">
-    <ContentPage.Content>
-        <local:SwipeContainer Swipe="OnSwipe">
+             xmlns:ext="clr-namespace:DasGrosseTrinkspiel.Extentions" >
+    <AbsoluteLayout Padding="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+        <ext:SwipeContainer Swipe="OnSwipe" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
             <StackLayout BackgroundColor="{StaticResource PrimaryBackground}">
                 <Button
                         x:Name="m_btnBack"
@@ -78,6 +78,9 @@
                             BackgroundColor="{StaticResource ButtonColor1}"/>
                 </Grid>
             </StackLayout>
-        </local:SwipeContainer>
-    </ContentPage.Content>
+        </ext:SwipeContainer>
+        <ContentView x:Name="m_loadingView" Padding="10,0" IsVisible="False" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+            <ActivityIndicator x:Name="ActivityIndicator" Margin="0,50,0,0" VerticalOptions="Center" HorizontalOptions="Center" Color="Black" IsRunning="True" WidthRequest="50" HeightRequest="50" />
+        </ContentView>
+    </AbsoluteLayout>
 </ContentPage>

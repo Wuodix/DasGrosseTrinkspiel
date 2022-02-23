@@ -13,43 +13,58 @@ namespace DasGrosseTrinkspiel.Views
 {
     public partial class SpielerMenu : ContentPage
     {
-        static ViewModels.ListViewViewModel ListViewModel;
-        static ViewModels.SpielerMenuViewModel viewModel;
-        static bool Gespeichert;
+        static ViewModels.ListViewViewModel m_listViewModel;
+        static ViewModels.SpielerMenuViewModel m_viewModel;
+        static List<string> m_neueSpieler = new List<string>();
+        static bool m_gespeichert;
         public SpielerMenu()
         {
             InitializeComponent();
 
-            if(viewModel == null)
+            if(m_viewModel == null)
             {
-                BindingContext = viewModel = new ViewModels.SpielerMenuViewModel();
-                ListViewModel = new ViewModels.ListViewViewModel();
+                BindingContext = m_viewModel = new ViewModels.SpielerMenuViewModel();
+                m_listViewModel = new ViewModels.ListViewViewModel();
 
                 Debug.WriteLine("hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
             }
             else
             {
-                BindingContext = viewModel;
+                BindingContext = m_viewModel;
             }
-            Gespeichert = true;
 
-            Debug.WriteLine("Spieleranzahl Start von Spielermenu: " + viewModel.Gamers.Count);
-            foreach (Spieler sp in viewModel.Gamers)
+            m_gespeichert = true;
+            m_neueSpieler.Clear();
+
+            Debug.WriteLine("Spieleranzahl Start von Spielermenu: " + m_viewModel.Gamers.Count);
+            foreach (Spieler sp in m_viewModel.Gamers)
             {
                 Debug.WriteLine("1"+sp);
             }
         }
 
-        public static ViewModels.ListViewViewModel ListviewviewModel { get { return ListViewModel; } set { ListViewModel = value; } }
-        public static ViewModels.SpielerMenuViewModel SpielerviewModel { get { return viewModel; } set { viewModel = value; } }
+        public static ViewModels.ListViewViewModel ListviewviewModel { get { return m_listViewModel; } set { m_listViewModel = value; } }
+        public static ViewModels.SpielerMenuViewModel SpielerviewModel { get { return m_viewModel; } set { m_viewModel = value; } }
 
         private async void OnSwiped(object sender, SwipedEventArgs e)
         {
             switch (e.Direction)
             {
                 case SwipeDirection.Right:
-                    if(!Gespeichert)
-                        await ClsDatabase.DeleteSpielerlistId(ClsDatabase.Listprimarykey);
+                    if (!m_gespeichert)
+                    {
+                        foreach (Spieler spieler in m_viewModel.Gamers)
+                        {
+                            foreach (string name in m_neueSpieler)
+                            {
+                                if (name == spieler.Name)
+                                {
+                                    await ClsDatabase.AddSpieler(name, FindSpieler(name).Geschlecht);
+                                }
+                            }
+                        }
+                    }
+                    m_viewModel.Gamers.Clear();
                     App.Current.MainPage = new MainMenu();
                     break;
             }
@@ -59,20 +74,36 @@ namespace DasGrosseTrinkspiel.Views
         {
             if(m_tbxName.Text != null && m_cmbxGender.SelectedItem != null)
             {
-                Gespeichert = false;
-                Spieler spieler = new Spieler
+                if (SpielerGibtsSchon(m_tbxName.Text)) { await DisplayAlert("Achtung", "Es gibt bereits einen Spieler mit diesem Namen!", "OK"); }
+                else
                 {
-                    Name = m_tbxName.Text,
-                    Geschlecht = m_cmbxGender.SelectedItem.ToString(),
-                };
+                    Spieler spieler = new Spieler
+                    {
+                        Name = m_tbxName.Text,
+                        Geschlecht = m_cmbxGender.SelectedItem.ToString(),
+                    };
 
-                spieler.Id = await ClsDatabase.AddSpieler(m_tbxName.Text, m_cmbxGender.SelectedItem.ToString());
+                    m_gespeichert = false;
+                    m_viewModel.Gamers.Add(spieler);
+                    m_neueSpieler.Add(spieler.Name);
 
-                viewModel.Gamers.Add(spieler);
-
-                m_tbxName.Text = null;
-                m_cmbxGender.SelectedItem = null;
+                    m_tbxName.Text = null;
+                    m_cmbxGender.SelectedItem = null;
+                }
             }
+        }
+
+        private bool SpielerGibtsSchon(string name)
+        {
+            foreach(Spieler spieler in m_viewModel.Gamers)
+            {
+                if(spieler.Name == name)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private async void m_btnDelete_Clicked(object sender, EventArgs e)
@@ -82,14 +113,25 @@ namespace DasGrosseTrinkspiel.Views
             Label label = grid.Children[0] as Label;
             string text = label.Text;
 
-            await ClsDatabase.DeleteSpieler(FindSpieler(text).Id);
+            Debug.WriteLine("text " + text);
+            foreach(string name in m_neueSpieler)
+            {
+                if(name == text)
+                {
+                    m_neueSpieler.Remove(name);
+                    m_viewModel.Gamers.Remove(FindSpieler(name));
+                    return;
+                }
 
-            await Refresh();
+                Debug.WriteLine("name " + name);
+            }
+            await ClsDatabase.DeleteSpieler(FindSpieler(text).Id);
+            m_viewModel.Gamers.Remove(FindSpieler(text));
         }
 
         private Spieler FindSpieler(string name)
         {
-            foreach(Spieler spieler in viewModel.Gamers)
+            foreach(Spieler spieler in m_viewModel.Gamers)
             {
                 if(spieler.Name == name)
                 {
@@ -102,21 +144,45 @@ namespace DasGrosseTrinkspiel.Views
 
         private async void m_btnBack_Clicked(object sender, EventArgs e)
         {
-            if (!Gespeichert)
-                await ClsDatabase.DeleteSpielerlistId(ClsDatabase.Listprimarykey);
+            if (!m_gespeichert)
+            {
+                foreach (Spieler spieler in m_viewModel.Gamers)
+                {
+                    foreach (string name in m_neueSpieler)
+                    {
+                        if (name == spieler.Name)
+                        {
+                            await ClsDatabase.AddSpieler(name, FindSpieler(name).Geschlecht);
+                        }
+                    }
+                }
+            }
+            m_viewModel.Gamers.Clear();
             App.Current.MainPage = new MainMenu();
         }
 
         private async void m_btnListen_Clicked(object sender, EventArgs e)
         {
-            if (!Gespeichert)
-                await ClsDatabase.DeleteSpielerlistId(ClsDatabase.Listprimarykey);
+            if (!m_gespeichert)
+            {
+                foreach (Spieler spieler in m_viewModel.Gamers)
+                {
+                    foreach (string name in m_neueSpieler)
+                    {
+                        if (name == spieler.Name)
+                        {
+                            await ClsDatabase.AddSpieler(name, FindSpieler(name).Geschlecht);
+                        }
+                    }
+                }
+            }
+            m_viewModel.Gamers.Clear();
             App.Current.MainPage = new ListView();
         }
 
         private async void m_btnAddListe_Clicked(object sender, EventArgs e)
         {
-            if(viewModel.Gamers.Count != 0)
+            if(m_viewModel.Gamers.Count != 0)
             {
                 bool tempbool = true; //Ist dafür da zu schaun ob das Speichern "abgebrochen" wurde (gibt bereits eine Liste mit dem Namen) dann darf der ListPrimaryKey nicht erhöht werden
                 if (!(await ListeGibtsSchon()))
@@ -133,22 +199,39 @@ namespace DasGrosseTrinkspiel.Views
                                 Name = temp
                             };
 
-                            Gespeichert = true;
                             await ClsDatabase.AddSpielerliste(spielerliste.Name);
 
-                            viewModel.Gamers.Clear();
+                            foreach(Spieler spieler in m_viewModel.Gamers)
+                            {
+                                spieler.Id = await ClsDatabase.AddSpieler(spieler.Name,spieler.Geschlecht);
+                            }
+
+                            m_viewModel.Gamers.Clear();
                         }
                     }
                 }
                 else
                 {
-                    viewModel.Gamers.Clear();
+                    if (!m_gespeichert)
+                    {
+                        foreach(Spieler spieler in m_viewModel.Gamers)
+                        {
+                            foreach(string name in m_neueSpieler)
+                            {
+                                if(name == spieler.Name)
+                                {
+                                    await ClsDatabase.AddSpieler(name, FindSpieler(name).Geschlecht);
+                                }
+                            }
+                        }
+                    }
+                    m_viewModel.Gamers.Clear();
                 }
 
                 if (tempbool)
                 {
-                    ClsDatabase.Listprimarykey = (await ClsDatabase.GetAllSpielerlisten()).LastOrDefault().Id;
-                    ClsDatabase.Listprimarykey++;
+                    await ClsDatabase.Getlistprimarykey();
+                    ClsDatabase.m_listprimarykey++;
                 }
             }
             else
@@ -178,7 +261,7 @@ namespace DasGrosseTrinkspiel.Views
 
             foreach(Spielerliste spl in temp)
             {
-                if(spl.Id == ClsDatabase.Listprimarykey)
+                if(spl.Id == ClsDatabase.m_listprimarykey)
                 {
                     return true;
                 }
@@ -190,7 +273,7 @@ namespace DasGrosseTrinkspiel.Views
         private async Task Refresh()
         {
             SpielerviewModel.Gamers.Clear();
-            List<Spieler> sps = await ClsDatabase.GetSpieler(ClsDatabase.Listprimarykey);
+            List<Spieler> sps = await ClsDatabase.GetSpieler(ClsDatabase.m_listprimarykey);
 
             foreach (Spieler sp in sps)
             {

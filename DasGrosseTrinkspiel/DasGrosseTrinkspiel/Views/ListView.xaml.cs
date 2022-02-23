@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -16,12 +17,16 @@ namespace DasGrosseTrinkspiel.Views
 {
     public partial class ListView : ContentPage
     {
-        static ViewModels.ListViewViewModel ViewModel;
+        static ViewModels.ListViewViewModel m_viewModel;
+        
         public ListView()
         {
             InitializeComponent();
 
-            BindingContext = ViewModel = SpielerMenu.ListviewviewModel;
+            BindingContext = m_viewModel = SpielerMenu.ListviewviewModel;
+
+            m_loadingView.IsVisible = true;
+            m_viewModel.SpielerlistenListe.Clear();
 
             InitSpielerLists();
         }
@@ -37,18 +42,15 @@ namespace DasGrosseTrinkspiel.Views
             }
         }
 
-        private static async Task<bool> InitSpielerLists()
+        private async void InitSpielerLists()
         {
             var temp = await ClsDatabase.GetAllSpielerlisten();
-            ViewModel.SpielerlistenListe.Clear();
 
             foreach (Spielerliste spl in temp)
             {
-                ViewModel.SpielerlistenListe.Add(spl);
-                Debug.WriteLine(spl.ToString());
+                m_viewModel.SpielerlistenListe.Add(spl);
             }
-
-            return true;
+            m_loadingView.IsVisible = false;
         }
 
         private void m_btnBack_Clicked(object sender, EventArgs e)
@@ -59,12 +61,12 @@ namespace DasGrosseTrinkspiel.Views
 
         private async void m_btnChoose_Clicked(object sender, EventArgs e)
         {
-            // nach dem Auswählen wird ClsDatabase.Listprimarykey nicht wieder auf die Id der letzten Liste gestellt
             if(m_lbxListen.SelectedItem != null)
             {
+                m_loadingView.IsVisible = true;
                 var getspieler = await ClsDatabase.GetSpieler((m_lbxListen.SelectedItem as Spielerliste).Id);
-                ClsDatabase.Listprimarykey = (m_lbxListen.SelectedItem as Spielerliste).Id;
-                Debug.WriteLine("primary Key aus btn Choose: " + ClsDatabase.Listprimarykey);
+                ClsDatabase.m_listprimarykey = (m_lbxListen.SelectedItem as Spielerliste).Id;
+                Debug.WriteLine("primary Key aus btn Choose: " + ClsDatabase.m_listprimarykey);
 
                 SpielerMenu.SpielerviewModel.Gamers.Clear();
 
@@ -75,6 +77,7 @@ namespace DasGrosseTrinkspiel.Views
                     Debug.WriteLine("2"+spieler.ToString());
                 }
 
+                m_loadingView.IsVisible = false;
                 App.Current.MainPage = new SpielerMenu();
             }
         }
@@ -83,10 +86,14 @@ namespace DasGrosseTrinkspiel.Views
         {
             if(m_lbxListen.SelectedItem != null)
             {
-                await ClsDatabase.DeleteSpielerlistId(FindList(m_lbxListen.SelectedItem.ToString()).Id);
+                m_loadingView.IsVisible = true;
+
+                await ClsDatabase.DeleteSpielervonListe(FindList(m_lbxListen.SelectedItem.ToString()).Id);
                 await ClsDatabase.DeleteSpielerliste(FindList(m_lbxListen.SelectedItem.ToString()).Id);
 
                 await Refresh();
+
+                m_loadingView.IsVisible = false;
             }
         }
 
@@ -95,14 +102,19 @@ namespace DasGrosseTrinkspiel.Views
             bool answer = await DisplayAlert("Verifizierung", "Willst du wirklich alle Einträge aus der Datenbank löschen?", "Ja", "Nein");
             if (answer)
             {
+                m_loadingView.IsVisible = true;
+
                 await ClsDatabase.DeleteEverything();
 
                 await Refresh();
+
+                m_loadingView.IsVisible = false;
             }
         }
+
         private Spielerliste FindList(string name)
         {
-            foreach (Spielerliste liste in ViewModel.SpielerlistenListe)
+            foreach (Spielerliste liste in m_viewModel.SpielerlistenListe)
             {
                 if (liste.Name == name)
                 {
@@ -116,7 +128,7 @@ namespace DasGrosseTrinkspiel.Views
         private async Task Refresh()
         {
             SpielerMenu.SpielerviewModel.Gamers.Clear();
-            List<Spieler> sps = await ClsDatabase.GetSpieler(ClsDatabase.Listprimarykey);
+            List<Spieler> sps = await ClsDatabase.GetSpieler(ClsDatabase.m_listprimarykey);
 
             foreach(Spieler sp in sps)
             {
