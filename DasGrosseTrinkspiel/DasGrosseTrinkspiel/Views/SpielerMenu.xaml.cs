@@ -29,6 +29,8 @@ namespace DasGrosseTrinkspiel.Views
                     App.Current.MainPage = new MainMenu();
                     break;
             }
+
+            Debug.WriteLine("Fuck uuu");
         }
 
         private void m_btnAdd_Clicked(object sender, EventArgs e)
@@ -40,6 +42,7 @@ namespace DasGrosseTrinkspiel.Views
                 spieler.Geschlecht = m_cmbxGender.SelectedItem.ToString();
 
                 viewModel.Gamers.Add(spieler);
+                Debug.WriteLine("Fuck uuu");
 
                 m_tbxName.Text = null;
                 m_cmbxGender.SelectedItem = null;
@@ -50,6 +53,7 @@ namespace DasGrosseTrinkspiel.Views
         {
             Button button = sender as Button;
             Grid grid = button.Parent as Grid;
+            Debug.WriteLine("Fuck uuu");
             Label label = grid.Children[0] as Label;
             string text = label.Text;
 
@@ -62,6 +66,7 @@ namespace DasGrosseTrinkspiel.Views
             {
                 if(spieler.Name == name)
                 {
+                    Debug.WriteLine("Fuck uuu");
                     return spieler;
                 }
             }
