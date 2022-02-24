@@ -43,6 +43,8 @@ namespace DasGrosseTrinkspiel.Views
 
                 m_tbxName.Text = null;
                 m_cmbxGender.SelectedItem = null;
+
+                Debug.WriteLine("Hi you suckaaa");
             }
         }
 
@@ -52,6 +54,7 @@ namespace DasGrosseTrinkspiel.Views
             Grid grid = button.Parent as Grid;
             Label label = grid.Children[0] as Label;
             string text = label.Text;
+            Debug.WriteLine("Hi you suckaaa");
 
             viewModel.Gamers.Remove(FindSpieler(text));
         }
@@ -65,6 +68,7 @@ namespace DasGrosseTrinkspiel.Views
                     return spieler;
                 }
             }
+            Debug.WriteLine("Hi you suckaaa");
 
             return null;
         }
