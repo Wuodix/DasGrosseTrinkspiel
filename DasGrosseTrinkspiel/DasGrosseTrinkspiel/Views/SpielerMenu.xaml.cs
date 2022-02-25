@@ -8,6 +8,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.Diagnostics;
 using DasGrosseTrinkspiel.Classes;
+using DasGrosseTrinkspiel.Extentions;
 
 namespace DasGrosseTrinkspiel.Views
 {
@@ -59,7 +60,7 @@ namespace DasGrosseTrinkspiel.Views
                             {
                                 if (name == spieler.Name)
                                 {
-                                    await ClsDatabase.AddSpieler(name, FindSpieler(name).Geschlecht);
+                                    await DataProvider.AddSpieler(name, FindSpieler(name).Geschlecht);
                                 }
                             }
                         }
@@ -125,7 +126,7 @@ namespace DasGrosseTrinkspiel.Views
 
                 Debug.WriteLine("name " + name);
             }
-            await ClsDatabase.DeleteSpieler(FindSpieler(text).Id);
+            await DataProvider.DeleteSpieler(FindSpieler(text).Id);
             m_viewModel.Gamers.Remove(FindSpieler(text));
         }
 
@@ -152,7 +153,7 @@ namespace DasGrosseTrinkspiel.Views
                     {
                         if (name == spieler.Name)
                         {
-                            await ClsDatabase.AddSpieler(name, FindSpieler(name).Geschlecht);
+                            await DataProvider.AddSpieler(name, FindSpieler(name).Geschlecht);
                         }
                     }
                 }
@@ -171,7 +172,7 @@ namespace DasGrosseTrinkspiel.Views
                     {
                         if (name == spieler.Name)
                         {
-                            await ClsDatabase.AddSpieler(name, FindSpieler(name).Geschlecht);
+                            await DataProvider.AddSpieler(name, FindSpieler(name).Geschlecht);
                         }
                     }
                 }
@@ -196,14 +197,14 @@ namespace DasGrosseTrinkspiel.Views
                         {
                             Spielerliste spielerliste = new Spielerliste
                             {
-                                Name = temp
+                                Name = temp,
                             };
 
-                            await ClsDatabase.AddSpielerliste(spielerliste.Name);
+                            await DataProvider.AddSpielerliste(spielerliste.Name);
 
                             foreach(Spieler spieler in m_viewModel.Gamers)
                             {
-                                spieler.Id = await ClsDatabase.AddSpieler(spieler.Name,spieler.Geschlecht);
+                                spieler.Id = await DataProvider.AddSpieler(spieler.Name,spieler.Geschlecht);
                             }
 
                             m_viewModel.Gamers.Clear();
@@ -220,7 +221,7 @@ namespace DasGrosseTrinkspiel.Views
                             {
                                 if(name == spieler.Name)
                                 {
-                                    await ClsDatabase.AddSpieler(name, FindSpieler(name).Geschlecht);
+                                    await DataProvider.AddSpieler(name, FindSpieler(name).Geschlecht);
                                 }
                             }
                         }
@@ -230,8 +231,8 @@ namespace DasGrosseTrinkspiel.Views
 
                 if (tempbool)
                 {
-                    await ClsDatabase.Getlistprimarykey();
-                    ClsDatabase.m_listprimarykey++;
+                    await DataProvider.Getlistprimarykey();
+                    DataProvider.m_listprimarykey++;
                 }
             }
             else
@@ -242,7 +243,7 @@ namespace DasGrosseTrinkspiel.Views
 
         private async Task<bool> ListennamenGibtsSchon(string name)
         {
-            List<Spielerliste> spls = await ClsDatabase.GetAllSpielerlisten();
+            List<Spielerliste> spls = await DataProvider.GetAllSpielerlisten();
 
             foreach(Spielerliste spielerliste in spls)
             {
@@ -257,11 +258,11 @@ namespace DasGrosseTrinkspiel.Views
 
         private async Task<bool> ListeGibtsSchon()
         {
-            List<Spielerliste> temp = await ClsDatabase.GetAllSpielerlisten();
+            List<Spielerliste> temp = await DataProvider.GetAllSpielerlisten();
 
             foreach(Spielerliste spl in temp)
             {
-                if(spl.Id == ClsDatabase.m_listprimarykey)
+                if(spl.Id == DataProvider.m_listprimarykey)
                 {
                     return true;
                 }
@@ -273,7 +274,7 @@ namespace DasGrosseTrinkspiel.Views
         private async Task Refresh()
         {
             SpielerviewModel.Gamers.Clear();
-            List<Spieler> sps = await ClsDatabase.GetSpieler(ClsDatabase.m_listprimarykey);
+            List<Spieler> sps = await DataProvider.GetSpieler(DataProvider.m_listprimarykey);
 
             foreach (Spieler sp in sps)
             {
@@ -281,7 +282,7 @@ namespace DasGrosseTrinkspiel.Views
             }
 
             ListviewviewModel.SpielerlistenListe.Clear();
-            List<Spielerliste> spls = await ClsDatabase.GetAllSpielerlisten();
+            List<Spielerliste> spls = await DataProvider.GetAllSpielerlisten();
 
             foreach (Spielerliste spl in spls)
             {

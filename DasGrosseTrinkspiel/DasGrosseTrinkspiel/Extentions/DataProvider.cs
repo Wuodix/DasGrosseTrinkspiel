@@ -1,4 +1,5 @@
 ﻿using SQLite;
+using DasGrosseTrinkspiel.Classes;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,9 +9,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
 
-namespace DasGrosseTrinkspiel.Classes
+namespace DasGrosseTrinkspiel.Extentions
 {
-    internal class ClsDatabase
+    internal class DataProvider
     {
         static SQLiteAsyncConnection m_spielerdb;
         static SQLiteAsyncConnection m_fragendb;
@@ -23,6 +24,7 @@ namespace DasGrosseTrinkspiel.Classes
             //Get Database Path
             var SpielerdatabasePath = Path.Combine(FileSystem.AppDataDirectory, "SpielerDatabase.db");
             var FragendatabasePath = Path.Combine(FileSystem.AppDataDirectory, "FragenDatabase.db");
+
 
             //Create Connections
             m_spielerdb = new SQLiteAsyncConnection(SpielerdatabasePath);
