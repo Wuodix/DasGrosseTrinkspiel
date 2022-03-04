@@ -31,9 +31,12 @@ namespace DasGrosseTrinkspiel.Extentions
             m_fragendb = new SQLiteAsyncConnection(FragendatabasePath);
 
             //Create Tables
-            await m_spielerdb.CreateTableAsync<Spieler>();
-            await m_spielerdb.CreateTableAsync<Spielerliste>();
+            await m_spielerdb.CreateTableAsync<ClsSpieler>();
+            await m_spielerdb.CreateTableAsync<ClsSpielerliste>();
             //Fragen Tables sind noch nicht erstellt (weil es gibt noch keine Klassen dafür)
+            await m_fragendb.CreateTableAsync<ClsFrage>();
+            await m_fragendb.CreateTableAsync<ClsKategorie>();
+            await m_fragendb.CreateTableAsync<ClsSpiel>();
 
             try
             {
@@ -44,12 +47,11 @@ namespace DasGrosseTrinkspiel.Extentions
                 m_listprimarykey = 1;
             }
         }
-
         public static async Task<int> AddSpieler(string name, string Geschlecht)
         {
             await Init();
 
-            Spieler spieler = new Spieler()
+            ClsSpieler spieler = new ClsSpieler()
             {
                 Name = name,
                 Geschlecht = Geschlecht,
@@ -61,7 +63,6 @@ namespace DasGrosseTrinkspiel.Extentions
             int id = await m_spielerdb.InsertAsync(spieler);
             return id;
         } 
-
         public static async Task Getlistprimarykey()
         {
             try
@@ -73,48 +74,43 @@ namespace DasGrosseTrinkspiel.Extentions
                 m_listprimarykey = 1;
             }
         }
-
         public static async Task DeleteSpieler(int id)
         {
             await Init();
 
-            await m_spielerdb.DeleteAsync<Spieler>(id);
+            await m_spielerdb.DeleteAsync<ClsSpieler>(id);
         }
-
         public static async Task DeleteSpielervonListe(int ListenId)
         {
             await Init();
 
-            var query = m_spielerdb.Table<Spieler>().Where(x => x.Listennummer.Equals(ListenId));
+            var query = m_spielerdb.Table<ClsSpieler>().Where(x => x.Listennummer.Equals(ListenId));
 
             await query.DeleteAsync();
         }
-
-        public static async Task<List<Spieler>> GetSpieler(int Listid)
+        public static async Task<List<ClsSpieler>> GetSpieler(int Listid)
         {
             await Init();
 
-            var query = m_spielerdb.Table<Spieler>().Where(x => x.Listennummer.Equals(Listid));
+            var query = m_spielerdb.Table<ClsSpieler>().Where(x => x.Listennummer.Equals(Listid));
 
             var Spielerreturn = await query.ToListAsync();
 
             return Spielerreturn;
         }
-
-        public static async Task<List<Spieler>> GetAllSpieler()
+        public static async Task<List<ClsSpieler>> GetAllSpieler()
         {
             await Init();
 
-            var Spielers = await m_spielerdb.Table<Spieler>().ToListAsync();
+            var Spielers = await m_spielerdb.Table<ClsSpieler>().ToListAsync();
 
             return Spielers;
         }
-
         public static async Task AddSpielerliste(string name)
         {
             await Init();
 
-            Spielerliste spielerliste = new Spielerliste()
+            ClsSpielerliste spielerliste = new ClsSpielerliste()
             {
                 Name = name
             };
@@ -124,32 +120,110 @@ namespace DasGrosseTrinkspiel.Extentions
 
             Debug.WriteLine("SpielerlistenId: " + spielerliste.Id);
         }
-
         public static async Task DeleteSpielerliste(int id)
         {
             await Init();
 
-            await m_spielerdb.DeleteAsync<Spielerliste>(id);
+            await m_spielerdb.DeleteAsync<ClsSpielerliste>(id);
         }
-
         public static async Task DeleteEverything()
         {
             await Init();
 
-            Debug.WriteLine("Deleted from Spieler: " + await m_spielerdb.DropTableAsync<Spieler>());
-            Debug.WriteLine("Deleted from Listen: " + await m_spielerdb.DropTableAsync<Spielerliste>());
+            Debug.WriteLine("Deleted from Spieler: " + await m_spielerdb.DropTableAsync<ClsSpieler>());
+            Debug.WriteLine("Deleted from Listen: " + await m_spielerdb.DropTableAsync<ClsSpielerliste>());
 
-            await m_spielerdb.CreateTableAsync<Spieler>();
-            await m_spielerdb.CreateTableAsync<Spielerliste>();
+            await m_spielerdb.CreateTableAsync<ClsSpieler>();
+            await m_spielerdb.CreateTableAsync<ClsSpielerliste>();
 
             m_listprimarykey = 1;
         }
-
-        public static async Task<List<Spielerliste>> GetAllSpielerlisten()
+        public static async Task<List<ClsSpielerliste>> GetAllSpielerlisten()
         {
             await Init();
 
-            var Spielerliste = await m_spielerdb.Table<Spielerliste>().ToListAsync();
+            var Spielerliste = await m_spielerdb.Table<ClsSpielerliste>().ToListAsync();
+
+            return Spielerliste;
+        }
+        public static async Task<int> AddFrage(string text, int Kategorie)
+        {
+            await Init();
+
+            ClsFrage frage = new ClsFrage()
+            {
+                Text = text,
+                Kategorie = Kategorie
+            };
+
+            int id = await m_fragendb.InsertAsync(frage);
+            return id;
+        }
+        public static async Task DeleteFrage(int id)
+        {
+            await Init();
+
+            await m_fragendb.DeleteAsync<ClsFrage>(id);
+        }
+        public static async Task<List<ClsFrage>> GetFrage(int Kategorieid)
+        {
+            await Init();
+
+            var query = m_fragendb.Table<ClsFrage>().Where(x => x.ID.Equals(Kategorieid));
+
+            var Spielerreturn = await query.ToListAsync();
+
+            return Spielerreturn;
+        }
+        public static async Task<int> AddKategorie(string name)
+        {
+            await Init();
+
+            ClsKategorie kategorie = new ClsKategorie()
+            {
+                Name = name
+            };
+
+            int id = await m_fragendb.InsertAsync(kategorie);
+            return id;
+        }
+        public static async Task DeleteKategorie(int id)
+        {
+            await Init();
+
+            await m_fragendb.DeleteAsync<ClsKategorie>(id);
+        }
+        public static async Task<List<ClsKategorie>> GetAllKategorien()
+        {
+            await Init();
+
+            var Spielerliste = await m_fragendb.Table<ClsKategorie>().ToListAsync();
+
+            return Spielerliste;
+        }
+        public static async Task<int> AddSpiel(string name)
+        {
+            await Init();
+
+            ClsSpiel spiel = new ClsSpiel()
+            {
+                Name = name
+            };
+
+            int id = await m_fragendb.InsertAsync(spiel);
+            return id;
+        }
+        public static async Task DeleteSpiel(int id)
+        {
+            await Init();
+
+            await m_fragendb.DeleteAsync<ClsSpiel>(id);
+        }
+        public static async Task<List<ClsSpiel>> GetAllSpiele()
+        {
+            await Init();
+
+            var Spielerliste = await m_fragendb.Table<ClsSpiel>().ToListAsync();
 
             return Spielerliste;
         }

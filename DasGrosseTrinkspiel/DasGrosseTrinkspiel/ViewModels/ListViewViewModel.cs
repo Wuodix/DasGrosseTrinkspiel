@@ -7,11 +7,11 @@ namespace DasGrosseTrinkspiel.ViewModels
 {
     public class ListViewViewModel
     {
-        public ObservableCollection<Classes.Spielerliste> SpielerlistenListe { get; set; }
+        public ObservableCollection<Classes.ClsSpielerliste> SpielerlistenListe { get; set; }
 
         public ListViewViewModel()
         {
-            SpielerlistenListe = new ObservableCollection<Classes.Spielerliste>();
+            SpielerlistenListe = new ObservableCollection<Classes.ClsSpielerliste>();
         }
     }
 }

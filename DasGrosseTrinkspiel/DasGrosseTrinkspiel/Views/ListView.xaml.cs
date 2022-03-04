@@ -47,7 +47,7 @@ namespace DasGrosseTrinkspiel.Views
         {
             var temp = await DataProvider.GetAllSpielerlisten();
 
-            foreach (Spielerliste spl in temp)
+            foreach (ClsSpielerliste spl in temp)
             {
                 m_viewModel.SpielerlistenListe.Add(spl);
             }
@@ -65,14 +65,14 @@ namespace DasGrosseTrinkspiel.Views
             if(m_lbxListen.SelectedItem != null)
             {
                 m_loadingView.IsVisible = true;
-                var getspieler = await DataProvider.GetSpieler((m_lbxListen.SelectedItem as Spielerliste).Id);
-                DataProvider.m_listprimarykey = (m_lbxListen.SelectedItem as Spielerliste).Id;
+                var getspieler = await DataProvider.GetSpieler((m_lbxListen.SelectedItem as ClsSpielerliste).Id);
+                DataProvider.m_listprimarykey = (m_lbxListen.SelectedItem as ClsSpielerliste).Id;
                 Debug.WriteLine("primary Key aus btn Choose: " + DataProvider.m_listprimarykey);
 
                 SpielerMenu.SpielerviewModel.Gamers.Clear();
 
                 Debug.WriteLine("Spieleranzahl btn Choose: " + getspieler.Count);
-                foreach (Spieler spieler in getspieler)
+                foreach (ClsSpieler spieler in getspieler)
                 {
                     SpielerMenu.SpielerviewModel.Gamers.Add(spieler);
                     Debug.WriteLine("2"+spieler.ToString());
@@ -113,9 +113,9 @@ namespace DasGrosseTrinkspiel.Views
             }
         }
 
-        private Spielerliste FindList(string name)
+        private ClsSpielerliste FindList(string name)
         {
-            foreach (Spielerliste liste in m_viewModel.SpielerlistenListe)
+            foreach (ClsSpielerliste liste in m_viewModel.SpielerlistenListe)
             {
                 if (liste.Name == name)
                 {
@@ -129,17 +129,17 @@ namespace DasGrosseTrinkspiel.Views
         private async Task Refresh()
         {
             SpielerMenu.SpielerviewModel.Gamers.Clear();
-            List<Spieler> sps = await DataProvider.GetSpieler(DataProvider.m_listprimarykey);
+            List<ClsSpieler> sps = await DataProvider.GetSpieler(DataProvider.m_listprimarykey);
 
-            foreach(Spieler sp in sps)
+            foreach(ClsSpieler sp in sps)
             {
                 SpielerMenu.SpielerviewModel.Gamers.Add(sp);
             }
 
             SpielerMenu.ListviewviewModel.SpielerlistenListe.Clear();
-            List<Spielerliste> spls = await DataProvider.GetAllSpielerlisten();
+            List<ClsSpielerliste> spls = await DataProvider.GetAllSpielerlisten();
 
-            foreach(Spielerliste spl in spls)
+            foreach(ClsSpielerliste spl in spls)
             {
                 SpielerMenu.ListviewviewModel.SpielerlistenListe.Add(spl);
             }

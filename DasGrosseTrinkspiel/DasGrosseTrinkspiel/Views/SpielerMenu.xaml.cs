@@ -26,8 +26,6 @@ namespace DasGrosseTrinkspiel.Views
             {
                 BindingContext = m_viewModel = new ViewModels.SpielerMenuViewModel();
                 m_listViewModel = new ViewModels.ListViewViewModel();
-
-                Debug.WriteLine("hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
             }
             else
             {
@@ -38,7 +36,7 @@ namespace DasGrosseTrinkspiel.Views
             m_neueSpieler.Clear();
 
             Debug.WriteLine("Spieleranzahl Start von Spielermenu: " + m_viewModel.Gamers.Count);
-            foreach (Spieler sp in m_viewModel.Gamers)
+            foreach (ClsSpieler sp in m_viewModel.Gamers)
             {
                 Debug.WriteLine("1"+sp);
             }
@@ -54,7 +52,7 @@ namespace DasGrosseTrinkspiel.Views
                 case SwipeDirection.Right:
                     if (!m_gespeichert)
                     {
-                        foreach (Spieler spieler in m_viewModel.Gamers)
+                        foreach (ClsSpieler spieler in m_viewModel.Gamers)
                         {
                             foreach (string name in m_neueSpieler)
                             {
@@ -78,7 +76,7 @@ namespace DasGrosseTrinkspiel.Views
                 if (SpielerGibtsSchon(m_tbxName.Text)) { await DisplayAlert("Achtung", "Es gibt bereits einen Spieler mit diesem Namen!", "OK"); }
                 else
                 {
-                    Spieler spieler = new Spieler
+                    ClsSpieler spieler = new ClsSpieler
                     {
                         Name = m_tbxName.Text,
                         Geschlecht = m_cmbxGender.SelectedItem.ToString(),
@@ -96,7 +94,7 @@ namespace DasGrosseTrinkspiel.Views
 
         private bool SpielerGibtsSchon(string name)
         {
-            foreach(Spieler spieler in m_viewModel.Gamers)
+            foreach(ClsSpieler spieler in m_viewModel.Gamers)
             {
                 if(spieler.Name == name)
                 {
@@ -130,9 +128,9 @@ namespace DasGrosseTrinkspiel.Views
             m_viewModel.Gamers.Remove(FindSpieler(text));
         }
 
-        private Spieler FindSpieler(string name)
+        private ClsSpieler FindSpieler(string name)
         {
-            foreach(Spieler spieler in m_viewModel.Gamers)
+            foreach(ClsSpieler spieler in m_viewModel.Gamers)
             {
                 if(spieler.Name == name)
                 {
@@ -147,7 +145,7 @@ namespace DasGrosseTrinkspiel.Views
         {
             if (!m_gespeichert)
             {
-                foreach (Spieler spieler in m_viewModel.Gamers)
+                foreach (ClsSpieler spieler in m_viewModel.Gamers)
                 {
                     foreach (string name in m_neueSpieler)
                     {
@@ -166,7 +164,7 @@ namespace DasGrosseTrinkspiel.Views
         {
             if (!m_gespeichert)
             {
-                foreach (Spieler spieler in m_viewModel.Gamers)
+                foreach (ClsSpieler spieler in m_viewModel.Gamers)
                 {
                     foreach (string name in m_neueSpieler)
                     {
@@ -195,14 +193,14 @@ namespace DasGrosseTrinkspiel.Views
                         if (await ListennamenGibtsSchon(temp)) { await DisplayAlert("Achtung", "Es gibt bereits eine Liste mit diesem Namen!", "OK"); tempbool = false; }
                         else
                         {
-                            Spielerliste spielerliste = new Spielerliste
+                            ClsSpielerliste spielerliste = new ClsSpielerliste
                             {
                                 Name = temp,
                             };
 
                             await DataProvider.AddSpielerliste(spielerliste.Name);
 
-                            foreach(Spieler spieler in m_viewModel.Gamers)
+                            foreach(ClsSpieler spieler in m_viewModel.Gamers)
                             {
                                 spieler.Id = await DataProvider.AddSpieler(spieler.Name,spieler.Geschlecht);
                             }
@@ -215,7 +213,7 @@ namespace DasGrosseTrinkspiel.Views
                 {
                     if (!m_gespeichert)
                     {
-                        foreach(Spieler spieler in m_viewModel.Gamers)
+                        foreach(ClsSpieler spieler in m_viewModel.Gamers)
                         {
                             foreach(string name in m_neueSpieler)
                             {
@@ -243,9 +241,9 @@ namespace DasGrosseTrinkspiel.Views
 
         private async Task<bool> ListennamenGibtsSchon(string name)
         {
-            List<Spielerliste> spls = await DataProvider.GetAllSpielerlisten();
+            List<ClsSpielerliste> spls = await DataProvider.GetAllSpielerlisten();
 
-            foreach(Spielerliste spielerliste in spls)
+            foreach(ClsSpielerliste spielerliste in spls)
             {
                 if(spielerliste.Name == name)
                 {
@@ -258,9 +256,9 @@ namespace DasGrosseTrinkspiel.Views
 
         private async Task<bool> ListeGibtsSchon()
         {
-            List<Spielerliste> temp = await DataProvider.GetAllSpielerlisten();
+            List<ClsSpielerliste> temp = await DataProvider.GetAllSpielerlisten();
 
-            foreach(Spielerliste spl in temp)
+            foreach(ClsSpielerliste spl in temp)
             {
                 if(spl.Id == DataProvider.m_listprimarykey)
                 {
@@ -274,17 +272,17 @@ namespace DasGrosseTrinkspiel.Views
         private async Task Refresh()
         {
             SpielerviewModel.Gamers.Clear();
-            List<Spieler> sps = await DataProvider.GetSpieler(DataProvider.m_listprimarykey);
+            List<ClsSpieler> sps = await DataProvider.GetSpieler(DataProvider.m_listprimarykey);
 
-            foreach (Spieler sp in sps)
+            foreach (ClsSpieler sp in sps)
             {
                 SpielerviewModel.Gamers.Add(sp);
             }
 
             ListviewviewModel.SpielerlistenListe.Clear();
-            List<Spielerliste> spls = await DataProvider.GetAllSpielerlisten();
+            List<ClsSpielerliste> spls = await DataProvider.GetAllSpielerlisten();
 
-            foreach (Spielerliste spl in spls)
+            foreach (ClsSpielerliste spl in spls)
             {
                 ListviewviewModel.SpielerlistenListe.Add(spl);
             }

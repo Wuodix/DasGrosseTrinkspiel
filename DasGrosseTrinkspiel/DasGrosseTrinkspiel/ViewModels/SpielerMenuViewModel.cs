@@ -7,12 +7,12 @@ namespace DasGrosseTrinkspiel.ViewModels
 {
     public class SpielerMenuViewModel
     {
-        public ObservableCollection<Classes.Spieler> Gamers { get; set; }
+        public ObservableCollection<Classes.ClsSpieler> Gamers { get; set; }
         public ObservableCollection<string> Genders { get;}
 
         public SpielerMenuViewModel()
         {
-            Gamers = new ObservableCollection<Classes.Spieler>();
+            Gamers = new ObservableCollection<Classes.ClsSpieler>();
             Genders = new ObservableCollection<string>
             {
                 "Männlich",
