@@ -202,7 +202,7 @@ namespace DasGrosseTrinkspiel.Views
 
                             foreach(ClsSpieler spieler in m_viewModel.Gamers)
                             {
-                                spieler.Id = await DataProvider.AddSpieler(spieler.Name,spieler.Geschlecht);
+                                await DataProvider.AddSpieler(spieler.Name,spieler.Geschlecht);
                             }
 
                             m_viewModel.Gamers.Clear();

@@ -5,22 +5,39 @@
              x:Class="DasGrosseTrinkspiel.Views.MainMenu">
     <ContentPage.Content>
         <RelativeLayout BackgroundColor="{StaticResource PrimaryBackground}">
-            <Label Text="Das Große Trinkspiel" 
-                   HorizontalTextAlignment="Center" 
-                   TextColor="Black" 
-                   FontSize="36"
-                   RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.05}"
-                   RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0}"/>
-            <Image Source="{local:ImageResource DasGrosseTrinkspiel.Images.Logo.jpg}"
+            <Frame BackgroundColor="Transparent"
+                   RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0}"
+                   RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0}"
+                   RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}">
+
+                <Label Text="Das Große Trinkspiel" 
+                        HorizontalTextAlignment="Center" 
+                        TextColor="Black" 
+                        FontSize="36"
+                   />
+            </Frame>
+
+            <Button BackgroundColor="Red"
+                    Text="Fragen (nur für Debuggen)"
+                    x:Name="m_btnFragen"
+                    Clicked="m_btnFragen_Clicked"/>
+
+            <Frame BackgroundColor="Transparent"
+                   RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0.12}"
+                   RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0}"
+                   RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}">
+                   <Image Source="{local:ImageResource DasGrosseTrinkspiel.Images.Logo.jpg}"
                        Aspect="AspectFit"
                        BackgroundColor="Transparent" 
                        HorizontalOptions="Center"
-                       RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0.1}"
-                       RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.25}"/>
+                   />
+            </Frame>
+            
 
             <Grid RowSpacing="20" BackgroundColor="{StaticResource GridColor1}" Padding="20,0,20,0"
                   RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0.5}"
-                  RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0}">
+                  RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0}"
+                  RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="20" />
                     <RowDefinition Height="Auto" />

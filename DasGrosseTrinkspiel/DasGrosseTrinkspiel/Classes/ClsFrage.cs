@@ -11,7 +11,7 @@ namespace DasGrosseTrinkspiel.Classes
         [PrimaryKey, AutoIncrement]
         public int ID { get; set; }
         public string Text { get; set; }
-        [ManyToOne, ForeignKey(typeof(ClsKategorie))]
+        //[ManyToOne, ForeignKey(typeof(ClsKategorie))]
         public int Kategorie { get; set; }
 
         public override string ToString()

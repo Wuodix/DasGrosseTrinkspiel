@@ -33,7 +33,6 @@ namespace DasGrosseTrinkspiel.Extentions
             //Create Tables
             await m_spielerdb.CreateTableAsync<ClsSpieler>();
             await m_spielerdb.CreateTableAsync<ClsSpielerliste>();
-            //Fragen Tables sind noch nicht erstellt (weil es gibt noch keine Klassen dafür)
             await m_fragendb.CreateTableAsync<ClsFrage>();
             await m_fragendb.CreateTableAsync<ClsKategorie>();
             await m_fragendb.CreateTableAsync<ClsSpiel>();
@@ -47,7 +46,7 @@ namespace DasGrosseTrinkspiel.Extentions
                 m_listprimarykey = 1;
             }
         }
-        public static async Task<int> AddSpieler(string name, string Geschlecht)
+        public static async Task AddSpieler(string name, string Geschlecht)
         {
             await Init();
 
@@ -60,8 +59,7 @@ namespace DasGrosseTrinkspiel.Extentions
 
             Debug.WriteLine("SpielerListennummer: " + spieler.Listennummer);
 
-            int id = await m_spielerdb.InsertAsync(spieler);
-            return id;
+            await m_spielerdb.InsertAsync(spieler);
         } 
         public static async Task Getlistprimarykey()
         {
@@ -130,11 +128,17 @@ namespace DasGrosseTrinkspiel.Extentions
         {
             await Init();
 
-            Debug.WriteLine("Deleted from Spieler: " + await m_spielerdb.DropTableAsync<ClsSpieler>());
-            Debug.WriteLine("Deleted from Listen: " + await m_spielerdb.DropTableAsync<ClsSpielerliste>());
+            await m_spielerdb.DropTableAsync<ClsSpieler>();
+            await m_spielerdb.DropTableAsync<ClsSpielerliste>();
+            await m_fragendb.DropTableAsync<ClsFrage>();
+            await m_fragendb.DropTableAsync<ClsSpiel>();
+            await m_fragendb.DropTableAsync<ClsKategorie>();
 
             await m_spielerdb.CreateTableAsync<ClsSpieler>();
             await m_spielerdb.CreateTableAsync<ClsSpielerliste>();
+            await m_fragendb.CreateTableAsync<ClsFrage>();
+            await m_fragendb.CreateTableAsync<ClsSpiel>();
+            await m_fragendb.CreateTableAsync<ClsKategorie>();
 
             m_listprimarykey = 1;
         }
@@ -146,7 +150,7 @@ namespace DasGrosseTrinkspiel.Extentions
 
             return Spielerliste;
         }
-        public static async Task<int> AddFrage(string text, int Kategorie)
+        public static async Task AddFrage(string text, int Kategorie)
         {
             await Init();
 
@@ -156,8 +160,7 @@ namespace DasGrosseTrinkspiel.Extentions
                 Kategorie = Kategorie
             };
 
-            int id = await m_fragendb.InsertAsync(frage);
-            return id;
+            await m_fragendb.InsertAsync(frage);
         }
         public static async Task DeleteFrage(int id)
         {
@@ -165,17 +168,25 @@ namespace DasGrosseTrinkspiel.Extentions
 
             await m_fragendb.DeleteAsync<ClsFrage>(id);
         }
+        public static async Task DeleteAlleFragen()
+        {
+            await Init();
+            
+            await m_fragendb.DropTableAsync<ClsFrage>();
+
+            await m_fragendb.CreateTableAsync<ClsFrage>();
+        }
         public static async Task<List<ClsFrage>> GetFrage(int Kategorieid)
         {
             await Init();
 
-            var query = m_fragendb.Table<ClsFrage>().Where(x => x.ID.Equals(Kategorieid));
+            var query = m_fragendb.Table<ClsFrage>().Where(x => x.Kategorie.Equals(Kategorieid));
 
             var Spielerreturn = await query.ToListAsync();
 
             return Spielerreturn;
         }
-        public static async Task<int> AddKategorie(string name)
+        public static async Task AddKategorie(string name)
         {
             await Init();
 
@@ -184,14 +195,21 @@ namespace DasGrosseTrinkspiel.Extentions
                 Name = name
             };
 
-            int id = await m_fragendb.InsertAsync(kategorie);
-            return id;
+            await m_fragendb.InsertAsync(kategorie);
         }
         public static async Task DeleteKategorie(int id)
         {
             await Init();
 
             await m_fragendb.DeleteAsync<ClsKategorie>(id);
+        }
+        public static async Task DeleteAlleKategorien()
+        {
+            await Init();
+
+            await m_fragendb.DropTableAsync<ClsKategorie>();
+
+            await m_fragendb.CreateTableAsync<ClsKategorie>();
         }
         public static async Task<List<ClsKategorie>> GetAllKategorien()
         {
@@ -201,7 +219,7 @@ namespace DasGrosseTrinkspiel.Extentions
 
             return Spielerliste;
         }
-        public static async Task<int> AddSpiel(string name)
+        public static async Task AddSpiel(string name)
         {
             await Init();
 
@@ -210,14 +228,21 @@ namespace DasGrosseTrinkspiel.Extentions
                 Name = name
             };
 
-            int id = await m_fragendb.InsertAsync(spiel);
-            return id;
+            await m_fragendb.InsertAsync(spiel);
         }
         public static async Task DeleteSpiel(int id)
         {
             await Init();
 
             await m_fragendb.DeleteAsync<ClsSpiel>(id);
+        }
+        public static async Task DeleteAlleSpiele()
+        {
+            await Init();
+
+            await m_fragendb.DropTableAsync<ClsSpiel>();
+
+            await m_fragendb.CreateTableAsync<ClsSpiel>();
         }
         public static async Task<List<ClsSpiel>> GetAllSpiele()
         {
