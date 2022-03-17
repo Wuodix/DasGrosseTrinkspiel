@@ -35,7 +35,6 @@ namespace DasGrosseTrinkspiel.Extentions
             await m_spielerdb.CreateTableAsync<ClsSpielerliste>();
             await m_fragendb.CreateTableAsync<ClsFrage>();
             await m_fragendb.CreateTableAsync<ClsKategorie>();
-            await m_fragendb.CreateTableAsync<ClsSpiel>();
 
             try
             {
@@ -131,13 +130,11 @@ namespace DasGrosseTrinkspiel.Extentions
             await m_spielerdb.DropTableAsync<ClsSpieler>();
             await m_spielerdb.DropTableAsync<ClsSpielerliste>();
             await m_fragendb.DropTableAsync<ClsFrage>();
-            await m_fragendb.DropTableAsync<ClsSpiel>();
             await m_fragendb.DropTableAsync<ClsKategorie>();
 
             await m_spielerdb.CreateTableAsync<ClsSpieler>();
             await m_spielerdb.CreateTableAsync<ClsSpielerliste>();
             await m_fragendb.CreateTableAsync<ClsFrage>();
-            await m_fragendb.CreateTableAsync<ClsSpiel>();
             await m_fragendb.CreateTableAsync<ClsKategorie>();
 
             m_listprimarykey = 1;
@@ -216,39 +213,6 @@ namespace DasGrosseTrinkspiel.Extentions
             await Init();
 
             var Spielerliste = await m_fragendb.Table<ClsKategorie>().ToListAsync();
-
-            return Spielerliste;
-        }
-        public static async Task AddSpiel(string name)
-        {
-            await Init();
-
-            ClsSpiel spiel = new ClsSpiel()
-            {
-                Name = name
-            };
-
-            await m_fragendb.InsertAsync(spiel);
-        }
-        public static async Task DeleteSpiel(int id)
-        {
-            await Init();
-
-            await m_fragendb.DeleteAsync<ClsSpiel>(id);
-        }
-        public static async Task DeleteAlleSpiele()
-        {
-            await Init();
-
-            await m_fragendb.DropTableAsync<ClsSpiel>();
-
-            await m_fragendb.CreateTableAsync<ClsSpiel>();
-        }
-        public static async Task<List<ClsSpiel>> GetAllSpiele()
-        {
-            await Init();
-
-            var Spielerliste = await m_fragendb.Table<ClsSpiel>().ToListAsync();
 
             return Spielerliste;
         }

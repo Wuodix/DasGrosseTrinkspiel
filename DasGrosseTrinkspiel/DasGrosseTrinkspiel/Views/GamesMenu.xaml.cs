@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using DasGrosseTrinkspiel.Classes.Spiele;
 
 namespace DasGrosseTrinkspiel.Views
 {
