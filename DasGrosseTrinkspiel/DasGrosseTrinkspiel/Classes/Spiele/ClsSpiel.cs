@@ -5,15 +5,27 @@ using System.Text;
 
 namespace DasGrosseTrinkspiel.Classes
 {
-    internal class ClsSpiel
+    abstract class ClsSpiel
     {
-        [PrimaryKey, AutoIncrement]
-        public int ID { get; set; }
         public string Name { get; set; }
 
         public override string ToString()
         {
             return Name;
+        }
+        public void Test()
+        {
+
+        }
+
+        abstract public void Start();
+        abstract public void Stop();
+    }
+    abstract class ClsKartenspiele : ClsSpiel
+    {
+        public void NextCard()
+        {
+
         }
     }
 }
