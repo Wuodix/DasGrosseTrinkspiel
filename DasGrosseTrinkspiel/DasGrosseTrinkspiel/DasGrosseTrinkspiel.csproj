@@ -13,12 +13,14 @@
   <ItemGroup>
     <None Remove="Images\Logo.jpg" />
     <None Remove="Images\Test.jpg" />
+    <None Remove="Sonstiges\Kategorien.csv" />
     <None Remove="Sonstiges\Test.csv" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Images\Logo.jpg" />
     <EmbeddedResource Include="Images\Test.jpg" />
+    <EmbeddedResource Include="Sonstiges\Kategorien.csv" />
     <EmbeddedResource Include="Sonstiges\Test.csv" />
   </ItemGroup>
 
@@ -30,6 +32,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\ChoseKategorie.xaml.cs">
+      <DependentUpon>ChoseKategorie.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\ListView.xaml.cs">
       <DependentUpon>ListView.xaml</DependentUpon>
     </Compile>
@@ -44,6 +49,9 @@
     </EmbeddedResource>
     <EmbeddedResource Update="RandomMenu.xaml">
       <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ChoseList.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\ListView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>

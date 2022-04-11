@@ -38,7 +38,7 @@ namespace DasGrosseTrinkspiel.Views
             {
                 case SwipeDirection.Right:
                     SpielerMenu.SpielerviewModel.Gamers.Clear();
-                    App.Current.MainPage = new SpielerMenu();
+                    Navigation.PopAsync();
                     break;
             }
         }
@@ -54,17 +54,12 @@ namespace DasGrosseTrinkspiel.Views
             m_loadingView.IsVisible = false;
         }
 
-        private void m_btnBack_Clicked(object sender, EventArgs e)
-        {
-            SpielerMenu.SpielerviewModel.Gamers.Clear();
-            App.Current.MainPage = new SpielerMenu();
-        }
-
         private async void m_btnChoose_Clicked(object sender, EventArgs e)
         {
             if(m_lbxListen.SelectedItem != null)
             {
                 m_loadingView.IsVisible = true;
+                Debug.WriteLine("ListenId beim auswählen: " + (m_lbxListen.SelectedItem as ClsSpielerliste).Id);
                 var getspieler = await DataProvider.GetSpieler((m_lbxListen.SelectedItem as ClsSpielerliste).Id);
                 DataProvider.m_listprimarykey = (m_lbxListen.SelectedItem as ClsSpielerliste).Id;
                 Debug.WriteLine("primary Key aus btn Choose: " + DataProvider.m_listprimarykey);
@@ -79,7 +74,7 @@ namespace DasGrosseTrinkspiel.Views
                 }
 
                 m_loadingView.IsVisible = false;
-                App.Current.MainPage = new SpielerMenu();
+                await Navigation.PopAsync();
             }
         }
 
@@ -136,12 +131,12 @@ namespace DasGrosseTrinkspiel.Views
                 SpielerMenu.SpielerviewModel.Gamers.Add(sp);
             }
 
-            SpielerMenu.ListviewviewModel.SpielerlistenListe.Clear();
+            m_viewModel.SpielerlistenListe.Clear();
             List<ClsSpielerliste> spls = await DataProvider.GetAllSpielerlisten();
 
             foreach(ClsSpielerliste spl in spls)
             {
-                SpielerMenu.ListviewviewModel.SpielerlistenListe.Add(spl);
+                m_viewModel.SpielerlistenListe.Add(spl);
             }
         }
     }

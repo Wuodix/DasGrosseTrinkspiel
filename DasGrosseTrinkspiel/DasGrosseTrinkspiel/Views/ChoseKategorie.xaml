@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="DasGrosseTrinkspiel.Views.ListView"
+             x:Class="DasGrosseTrinkspiel.Views.ChoseKategorie"
              xmlns:ext="clr-namespace:DasGrosseTrinkspiel.Extentions" >
     <AbsoluteLayout Padding="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
         <ext:SwipeContainer Swipe="OnSwipe" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
             <StackLayout BackgroundColor="{StaticResource PrimaryBackground}">
-                <Label Text="Spielerlisten" 
+                <Label Text="Fragenkategorien" 
                         TextColor="White"
                         BackgroundColor="Transparent"
-                        FontSize="50"
+                        FontSize="38"
                         Padding="0,-15,0,0"
                         HorizontalOptions="Center"
             />
@@ -18,20 +18,14 @@
                         <RowDefinition Height="7*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
 
                     <CollectionView 
                         x:Name="m_lbxListen"
                         Margin="0,0,0,20"
-                        Grid.ColumnSpan="3"
                         Grid.Row="0"
-                        ItemsSource="{Binding SpielerlistenListe}"
+                        ItemsSource="{Binding KategorienListe}"
                         BackgroundColor="{StaticResource GridColor1}" 
-                        SelectionMode="Single">
+                        SelectionMode="Multiple">
 
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
@@ -41,29 +35,12 @@
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>
-                    <Button Text="Auswählen"
-                            x:Name="m_btnChoose"
-                            FontSize="16"
-                            Grid.Column="0"
+                    <Button Text="Starten"
+                            x:Name="m_btnStart"
+                            FontSize="25"
                             Grid.Row="1"
                             Margin="0,0,0,20"
-                            Clicked="m_btnChoose_Clicked"
-                            BackgroundColor="{StaticResource ButtonColor1}"/>
-                    <Button Text="Löschen"
-                            x:Name="m_btnDelete"
-                            FontSize="16"
-                            Grid.Column="1"
-                            Grid.Row="1"
-                            Margin="0,0,0,20"
-                            Clicked="m_btnDelete_Clicked"
-                            BackgroundColor="{StaticResource ButtonColor1}"/>
-                    <Button Text="Alles Löschen"
-                            x:Name="m_btnDeleteAll"
-                            FontSize="16"
-                            Grid.Column="2"
-                            Grid.Row="1"
-                            Margin="0,0,0,20"
-                            Clicked="m_btnDeleteAll_Clicked"
+                            Clicked="m_btnStart_Clicked"
                             BackgroundColor="{StaticResource ButtonColor1}"/>
                 </Grid>
             </StackLayout>

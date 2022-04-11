@@ -89,11 +89,7 @@ namespace DasGrosseTrinkspiel.Extentions
         {
             await Init();
 
-            var query = m_spielerdb.Table<ClsSpieler>().Where(x => x.Listennummer.Equals(Listid));
-
-            var Spielerreturn = await query.ToListAsync();
-
-            return Spielerreturn;
+            return await m_spielerdb.Table<ClsSpieler>().Where(x => x.Listennummer==Listid).ToListAsync();
         }
         public static async Task<List<ClsSpieler>> GetAllSpieler()
         {
@@ -177,11 +173,7 @@ namespace DasGrosseTrinkspiel.Extentions
         {
             await Init();
 
-            var query = m_fragendb.Table<ClsFrage>().Where(x => x.Kategorie.Equals(Kategorieid));
-
-            var Spielerreturn = await query.ToListAsync();
-
-            return Spielerreturn;
+            return await m_fragendb.Table<ClsFrage>().Where(x => x.Kategorie==Kategorieid).ToListAsync();
         }
         public static async Task AddKategorie(string name)
         {

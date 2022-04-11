@@ -16,7 +16,7 @@ namespace DasGrosseTrinkspiel.Views
     {
         static ViewModels.ListViewViewModel m_listViewModel;
         static ViewModels.SpielerMenuViewModel m_viewModel;
-        static List<string> m_neueSpieler = new List<string>();
+        static readonly List<string> m_neueSpieler = new List<string>();
         static bool m_gespeichert;
         public SpielerMenu()
         {
@@ -64,7 +64,7 @@ namespace DasGrosseTrinkspiel.Views
                         }
                     }
                     m_viewModel.Gamers.Clear();
-                    App.Current.MainPage = new MainMenu();
+                    await Navigation.PopAsync();
                     break;
             }
         }
@@ -141,42 +141,11 @@ namespace DasGrosseTrinkspiel.Views
             return null;
         }
 
-        private async void m_btnBack_Clicked(object sender, EventArgs e)
-        {
-            if (!m_gespeichert)
-            {
-                foreach (ClsSpieler spieler in m_viewModel.Gamers)
-                {
-                    foreach (string name in m_neueSpieler)
-                    {
-                        if (name == spieler.Name)
-                        {
-                            await DataProvider.AddSpieler(name, FindSpieler(name).Geschlecht);
-                        }
-                    }
-                }
-            }
-            m_viewModel.Gamers.Clear();
-            App.Current.MainPage = new MainMenu();
-        }
-
         private async void m_btnListen_Clicked(object sender, EventArgs e)
         {
-            if (!m_gespeichert)
-            {
-                foreach (ClsSpieler spieler in m_viewModel.Gamers)
-                {
-                    foreach (string name in m_neueSpieler)
-                    {
-                        if (name == spieler.Name)
-                        {
-                            await DataProvider.AddSpieler(name, FindSpieler(name).Geschlecht);
-                        }
-                    }
-                }
-            }
+            await SpielerSpeichern();
             m_viewModel.Gamers.Clear();
-            App.Current.MainPage = new ListView();
+            await Navigation.PushAsync(new ListView());
         }
 
         private async void m_btnAddListe_Clicked(object sender, EventArgs e)
@@ -211,19 +180,7 @@ namespace DasGrosseTrinkspiel.Views
                 }
                 else
                 {
-                    if (!m_gespeichert)
-                    {
-                        foreach(ClsSpieler spieler in m_viewModel.Gamers)
-                        {
-                            foreach(string name in m_neueSpieler)
-                            {
-                                if(name == spieler.Name)
-                                {
-                                    await DataProvider.AddSpieler(name, FindSpieler(name).Geschlecht);
-                                }
-                            }
-                        }
-                    }
+                    await SpielerSpeichern();
                     m_viewModel.Gamers.Clear();
                 }
 
@@ -269,22 +226,20 @@ namespace DasGrosseTrinkspiel.Views
             return false;
         }
 
-        private async Task Refresh()
+        private async Task SpielerSpeichern()
         {
-            SpielerviewModel.Gamers.Clear();
-            List<ClsSpieler> sps = await DataProvider.GetSpieler(DataProvider.m_listprimarykey);
-
-            foreach (ClsSpieler sp in sps)
+            if (!m_gespeichert)
             {
-                SpielerviewModel.Gamers.Add(sp);
-            }
-
-            ListviewviewModel.SpielerlistenListe.Clear();
-            List<ClsSpielerliste> spls = await DataProvider.GetAllSpielerlisten();
-
-            foreach (ClsSpielerliste spl in spls)
-            {
-                ListviewviewModel.SpielerlistenListe.Add(spl);
+                foreach (ClsSpieler spieler in m_viewModel.Gamers)
+                {
+                    foreach (string name in m_neueSpieler)
+                    {
+                        if (name == spieler.Name)
+                        {
+                            await DataProvider.AddSpieler(name, FindSpieler(name).Geschlecht);
+                        }
+                    }
+                }
             }
         }
     }

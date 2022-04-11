@@ -6,17 +6,6 @@
     <ContentPage.Content>
         <local:SwipeContainer Swipe="OnSwipe">
             <StackLayout BackgroundColor="{StaticResource PrimaryBackground}">
-                <Button
-                        x:Name="m_btnBack"
-                        Clicked="m_btnBack_Clicked"
-                        BackgroundColor="Transparent"
-                        Text="Back"
-                        FontSize="16"
-                        Padding="0,-5,0,0"
-                        Margin="0,5,0,0"
-                        HeightRequest="20"
-                        HorizontalOptions="Start"
-                />
                 <Label Text="Spiele" 
                         TextColor="White"
                         BackgroundColor="Transparent"
@@ -40,6 +29,7 @@
                             WidthRequest="{StaticResource Spiele.ButtonWidth}"
                             HeightRequest="{StaticResource Spiele.ButtonHeight}"
                             AbsoluteLayout.LayoutBounds="0,0"
+                            Clicked="m_btnKartenspiel_Clicked"
                         />
                         <Button Text="Ich hab noch nie..."
                             TextColor="White"
@@ -134,7 +124,7 @@
                         <Button Text="Wer kennt wen am Besten?"
                             TextColor="White"
                             Margin="0,0,40,0"
-                            FontSize="20"
+                            FontSize="18"
                             BackgroundColor="{StaticResource ButtonColor1}"
                             WidthRequest="{StaticResource Spiele.ButtonWidth}"
                             HeightRequest="{StaticResource Spiele.ButtonHeight}"
@@ -152,7 +142,7 @@
                         <Button Text="Allgemeinwissensfragen"
                             TextColor="White"
                             Margin="0,0,40,0"
-                            FontSize="21"
+                            FontSize="20"
                             BackgroundColor="{StaticResource ButtonColor1}"
                             WidthRequest="{StaticResource Spiele.ButtonWidth}"
                             HeightRequest="{StaticResource Spiele.ButtonHeight}"

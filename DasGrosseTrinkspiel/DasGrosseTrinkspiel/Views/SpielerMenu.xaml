@@ -7,17 +7,6 @@
     <ContentPage.Content>
         <local:SwipeContainer Swipe="OnSwiped">
             <StackLayout BackgroundColor="{StaticResource PrimaryBackground}">
-                <Button
-                        x:Name="m_btnBack"
-                        Clicked="m_btnBack_Clicked"
-                        BackgroundColor="Transparent"
-                        Text="Back"
-                        FontSize="16"
-                        Padding="0,-5,0,0"
-                        Margin="0,5,0,0"
-                        HeightRequest="20"
-                        HorizontalOptions="Start"
-                />
                 <Label Text="Spieler" 
                         TextColor="White"
                         BackgroundColor="Transparent"

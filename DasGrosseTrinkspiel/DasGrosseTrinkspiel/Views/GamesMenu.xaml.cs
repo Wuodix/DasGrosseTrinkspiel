@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using DasGrosseTrinkspiel.Classes.Spiele;
+using DasGrosseTrinkspiel.Classes;
 
 namespace DasGrosseTrinkspiel.Views
 {
@@ -16,19 +16,22 @@ namespace DasGrosseTrinkspiel.Views
         {
             InitializeComponent();
         }
-
         private void m_btnBack_Clicked(object sender, EventArgs e)
         {
-            App.Current.MainPage = new MainMenu();
+            Navigation.PopAsync();
         }
         private void OnSwipe(object sender, SwipedEventArgs e)
         {
             switch (e.Direction)
             {
                 case SwipeDirection.Right:
-                    App.Current.MainPage = new MainMenu();
+                    Navigation.PopAsync();
                     break;
             }
+        }
+        private void m_btnKartenspiel_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new ChoseList(Spielart.Kartenspiel));
         }
     }
 }
