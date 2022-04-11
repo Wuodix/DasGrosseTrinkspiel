@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DasGrosseTrinkspiel.Views.FragenPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Button Text="Alle Fragen ausgeben (Debugausgabe)"
+                    x:Name="m_btnAllesAusgeben"
+                    Clicked="m_btnAllesAusgeben_Clicked"/>
+            <Button Text="Alle Fragen löschen"
+                    x:Name="m_btnAllesLöschen"
+                    Clicked="m_btnAllesLöschen_Clicked"/>
+            <Button Text="Fragen aus Database einlesen"
+                    x:Name="m_btnEinlesenausDB"
+                    Clicked="m_btnEinlesenausDB_Clicked"/>
+            <Button Text="Fragen aus CSV einlesen"
+                    x:Name="m_btnEinlesenausCSV"
+                    Clicked="m_btnEinlesenausCSV_Clicked"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

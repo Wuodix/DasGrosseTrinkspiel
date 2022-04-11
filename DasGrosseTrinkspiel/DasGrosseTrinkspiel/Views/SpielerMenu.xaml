@@ -7,11 +7,23 @@
     <ContentPage.Content>
         <local:SwipeContainer Swipe="OnSwiped">
             <StackLayout BackgroundColor="{StaticResource PrimaryBackground}">
+                <Button
+                        x:Name="m_btnBack"
+                        Clicked="m_btnBack_Clicked"
+                        BackgroundColor="Transparent"
+                        Text="Back"
+                        FontSize="16"
+                        Padding="0,-5,0,0"
+                        Margin="0,5,0,0"
+                        HeightRequest="20"
+                        HorizontalOptions="Start"
+                />
                 <Label Text="Spieler" 
-                TextColor="White"
-                FontSize="50"
-                HorizontalOptions="Center"
-                Padding="0,20,0,0"
+                        TextColor="White"
+                        BackgroundColor="Transparent"
+                        FontSize="50"
+                        Padding="0,-15,0,0"
+                        HorizontalOptions="Center"
                 />
 
                 <Grid Margin="40,0,40,0">
@@ -60,6 +72,22 @@
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>
+                    <Button Text="Vorhandene Listen"
+                            x:Name="m_btnListen"
+                            FontSize="16"
+                            Grid.Column="0"
+                            Grid.Row="3"
+                            Margin="0,0,0,20"
+                            Clicked="m_btnListen_Clicked"
+                            BackgroundColor="{StaticResource ButtonColor1}"/>
+                    <Button Text="Liste Speichern"
+                            x:Name="m_btnAddListe"
+                            FontSize="16"
+                            Grid.Column="1"
+                            Grid.Row="3"
+                            Margin="0,0,0,20"
+                            Clicked="m_btnAddListe_Clicked"
+                            BackgroundColor="{StaticResource ButtonColor1}"/>
                 </Grid>
             </StackLayout>
         </local:SwipeContainer>

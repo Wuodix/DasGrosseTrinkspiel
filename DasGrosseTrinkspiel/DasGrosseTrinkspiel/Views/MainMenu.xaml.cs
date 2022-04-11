@@ -29,7 +29,11 @@ namespace DasGrosseTrinkspiel.Views
         private void m_btnSpieler_Clicked(object sender, EventArgs e)
         {
             App.Current.MainPage = new SpielerMenu();
-            Debug.WriteLine("jetzt");
+        }
+
+        private void m_btnFragen_Clicked(object sender, EventArgs e)
+        {
+            App.Current.MainPage = new FragenPage();
         }
     }
 }

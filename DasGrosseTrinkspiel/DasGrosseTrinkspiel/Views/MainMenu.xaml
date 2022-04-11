@@ -3,31 +3,50 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:DasGrosseTrinkspiel"
              x:Class="DasGrosseTrinkspiel.Views.MainMenu">
+    <ContentPage.Content>
+        <RelativeLayout BackgroundColor="{StaticResource PrimaryBackground}">
+            <Frame BackgroundColor="Transparent"
+                   RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0}"
+                   RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0}"
+                   RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}">
 
-    <StackLayout BackgroundColor="{StaticResource PrimaryBackground}" Spacing="30">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Frame Grid.Row="0" BackgroundColor="Transparent">
-                <Label Text="Das Große Trinkspiel" HorizontalTextAlignment="Center" TextColor="Black" FontSize="36"/>
+                <Label Text="Das Große Trinkspiel" 
+                        HorizontalTextAlignment="Center" 
+                        TextColor="Black" 
+                        FontSize="36"
+                   />
             </Frame>
-            <Frame Grid.Row="1" BackgroundColor="Transparent">
-                <Image Source="{local:ImageResource DasGrosseTrinkspiel.Images.Logo.jpg}" />
-            </Frame>
-        </Grid>
 
-        <Grid RowSpacing="20" BackgroundColor="{StaticResource GridColor1}" Padding="20,0,20,0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="20" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="20" />
-            </Grid.RowDefinitions>
-            <Button Text="Spieler"
+            <Button BackgroundColor="Red"
+                    Text="Fragen (nur für Debuggen)"
+                    x:Name="m_btnFragen"
+                    Clicked="m_btnFragen_Clicked"/>
+
+            <Frame BackgroundColor="Transparent"
+                   RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0.12}"
+                   RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0}"
+                   RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}">
+                   <Image Source="{local:ImageResource DasGrosseTrinkspiel.Images.Logo.jpg}"
+                       Aspect="AspectFit"
+                       BackgroundColor="Transparent" 
+                       HorizontalOptions="Center"
+                   />
+            </Frame>
+            
+
+            <Grid RowSpacing="20" BackgroundColor="{StaticResource GridColor1}" Padding="20,0,20,0"
+                  RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0.5}"
+                  RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0}"
+                  RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="20" />
+                </Grid.RowDefinitions>
+                <Button Text="Spieler"
                         x:Name="m_btnSpieler"
                         FontSize="27"
                         HeightRequest="60"
@@ -35,14 +54,14 @@
                         TextColor="White"
                         Grid.Row="1" 
                         Clicked="m_btnSpieler_Clicked"/>
-            <Button Text="Spiele" x:Name="m_btnSpiele"
+                <Button Text="Spiele" x:Name="m_btnSpiele"
                         FontSize="27"
                         HeightRequest="60"
                         BackgroundColor="{StaticResource ButtonColor1}"
                         TextColor="White" 
                         Grid.Row="2" 
                         Clicked="m_btnSpiele_Clicked"/>
-            <Button Text="Zufallsgenerator"
+                <Button Text="Zufallsgenerator"
                         x:Name="m_btnRandom"
                         FontSize="27"
                         HeightRequest="60"
@@ -50,51 +69,13 @@
                         TextColor="White" 
                         Grid.Row="3" 
                         Clicked="m_btnRandom_Clicked"/>
-            <Button Text="Darf ich schon wieder Autofahren?"
+                <Button Text="Darf ich schon wieder Autofahren?"
                         FontSize="16"
                         HeightRequest="60"
                         BackgroundColor="{StaticResource ButtonColor1}"
                         TextColor="White" 
                         Grid.Row="4" />
-        </Grid>
-
-
-        <!--
-        <Grid BackgroundColor="{StaticResource GridColor1}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-
-        </Grid>
-        <AbsoluteLayout BackgroundColor="{StaticResource GridColor1}">
-            <Button Text="Spiele"
-                        FontSize="16"
-                        BackgroundColor="{StaticResource ButtonColor1}"
-                        TextColor="White" 
-                        AbsoluteLayout.LayoutBounds="50,50,150,50"/>
-            <Button Text="Spiele"
-                        FontSize="16"
-                        BackgroundColor="{StaticResource ButtonColor1}"
-                        TextColor="White" />
-        </AbsoluteLayout>
-        <RelativeLayout BackgroundColor="{StaticResource GridColor1}">
-            <Button Text="Spiele"
-                        FontSize="16"
-                        BackgroundColor="{StaticResource ButtonColor1}"
-                        TextColor="White"
-                    RelativeLayout.XConstraint="100"/>
-            <Button Text="Spiele"
-                        FontSize="16"
-                        BackgroundColor="{StaticResource ButtonColor1}"
-                        TextColor="White"
-                        RelativeLayout.YConstraint="50"/>
+            </Grid>
         </RelativeLayout>
-        -->
-    </StackLayout>
-
-
+    </ContentPage.Content>
 </ContentPage>
