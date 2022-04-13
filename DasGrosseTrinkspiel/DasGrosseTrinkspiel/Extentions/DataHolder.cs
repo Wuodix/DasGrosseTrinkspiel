@@ -7,7 +7,7 @@ namespace DasGrosseTrinkspiel.Extentions
 {
     internal class DataHolder
     {
-        public static ClsKartenspiel Katenspiel { get; set; }
+        public static ClsKartenspiel Kartenspiel { get; set; }
         public static List<ClsFrage> Fragen { get; set; }
     }
 }

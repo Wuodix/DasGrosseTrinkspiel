@@ -42,7 +42,7 @@ namespace DasGrosseTrinkspiel.Views
         }
         private void m_btnStart_Clicked(object sender, EventArgs e)
         {
-
+            m_loadingView.IsVisible = true;
             if (m_lbxListen.SelectedItems[0] != null)
             {
                 List<ClsKategorie> list = new List<ClsKategorie>();
@@ -53,7 +53,7 @@ namespace DasGrosseTrinkspiel.Views
                 switch (m_spielart)
                 {
                     case Spielart.Kartenspiel:
-                        DataHolder.Katenspiel = new ClsKartenspiel(list, m_spielerliste);
+                        DataHolder.Kartenspiel = new ClsKartenspiel(list, m_spielerliste);
                         break;
                     case Spielart.Sonstiges:
                         //Andere Spiele Starten bzw. für andere Spielarten noch enum und Dataholder ding erstellen

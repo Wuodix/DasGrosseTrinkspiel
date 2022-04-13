@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DasGrosseTrinkspiel.Views.CardGamePage">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <StackLayout BackgroundColor="{StaticResource PrimaryBackground}"
+                         Grid.ColumnSpan="3">
+                <Label Text="{Binding Frage}"
+                   FontSize="50"
+                   x:Name="Fragenlabel"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+            </StackLayout>
+            <Label BackgroundColor="Red"
+                   Grid.Column="0">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="PreviousPageTap"/>
+                </Label.GestureRecognizers>
+            </Label>
+            <Label BackgroundColor="Transparent"
+                   Grid.Column="1" />
+
+
+            <Label BackgroundColor="Transparent"
+                   Grid.Column="2" >
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="NextPageTap" />
+                </Label.GestureRecognizers>
+            </Label>
+        </Grid>
+        
+    </ContentPage.Content>
+</ContentPage>

@@ -27,11 +27,14 @@
   <ItemGroup>
     <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
     <PackageReference Include="SQLiteNetExtensions" Version="2.1.0" />
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2337" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.7.1" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2401" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.2" />
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\CardGamePage.xaml.cs">
+      <DependentUpon>CardGamePage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\ChoseKategorie.xaml.cs">
       <DependentUpon>ChoseKategorie.xaml</DependentUpon>
     </Compile>
@@ -49,6 +52,9 @@
     </EmbeddedResource>
     <EmbeddedResource Update="RandomMenu.xaml">
       <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\CardGamePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\ChoseList.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
