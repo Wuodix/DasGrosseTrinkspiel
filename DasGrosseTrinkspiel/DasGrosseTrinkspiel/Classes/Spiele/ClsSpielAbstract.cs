@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace DasGrosseTrinkspiel.Classes
 {
-    abstract class ClsSpiel
+    abstract class ClsSpielAbstract
     {
         public string Name { get; set; }
 
@@ -20,7 +20,7 @@ namespace DasGrosseTrinkspiel.Classes
         }
         abstract public void Stop();
     }
-    class ClsKartenspiel : ClsSpiel
+    class ClsKartenspiel : ClsSpielAbstract
     {
         private List<ClsFrage> m_fragen, m_randomizedFragen, m_previousFragen;
         private List<ClsSpieler> m_spieler;
@@ -44,7 +44,9 @@ namespace DasGrosseTrinkspiel.Classes
             }
             m_randomizedFragen = m_fragen.OrderBy(x => m_random.Next()).ToList();
             m_selectedQuestion = -1;
-            App.Current.MainPage = new NavigationPage(NextCard());
+            NavigationPage page = new NavigationPage(NextCard());
+            NavigationPage.SetHasNavigationBar(page, false);
+            App.Current.MainPage = page;
         }
 
         public ContentPage NextCard()

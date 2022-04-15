@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DasGrosseTrinkspiel.Extentions;
+using Xamarin.CommunityToolkit.Extensions;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -12,6 +14,7 @@ namespace DasGrosseTrinkspiel.Views
 {
     public partial class CardGamePage : ContentPage
     {
+        Task m_toast;
         public CardGamePage(string Frage)
         {
             InitializeComponent();
@@ -23,12 +26,6 @@ namespace DasGrosseTrinkspiel.Views
         {
             base.OnAppearing();
             MessagingCenter.Send(this, "ForceLandscape");
-        }
-
-        protected override void OnDisappearing()
-        {
-            base.OnDisappearing();
-            //MessagingCenter.Send(this, "ForcePortrait");
         }
 
         private async void NextPageTap(object sender, EventArgs e)
@@ -44,6 +41,22 @@ namespace DasGrosseTrinkspiel.Views
                 return;
             }
             await Navigation.PopModalAsync();
+        }
+
+        protected override bool OnBackButtonPressed()
+        {
+            if(m_toast != null)
+            {
+                if (m_toast.IsCompleted == false)
+                {
+                    MessagingCenter.Send(this, "ForcePortrait");
+                    App.Current.MainPage = new NavigationPage(new MainMenu());
+                }
+            }
+            
+            m_toast = this.DisplayToastAsync("Erneut zurück zum Beenden", 1000);
+
+            return true;
         }
     }
 }

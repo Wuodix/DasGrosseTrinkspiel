@@ -18,13 +18,15 @@ namespace DasGrosseTrinkspiel.Views
         static ViewModels.KategorieViewModel m_viewModel;
         Spielart m_spielart;
         ClsSpielerliste m_spielerliste;
-        public ChoseKategorie(Spielart spielart, ClsSpielerliste spielerliste)
+        string m_spiel;
+        public ChoseKategorie(Spielart spielart, ClsSpielerliste spielerliste, string spiel)
         {
             InitializeComponent();
 
             BindingContext = m_viewModel = new ViewModels.KategorieViewModel();
             m_spielart = spielart;
             m_spielerliste = spielerliste;
+            m_spiel = spiel;
 
             m_loadingView.IsVisible = true;
 
@@ -32,9 +34,16 @@ namespace DasGrosseTrinkspiel.Views
         }
         private async void InitKategorien()
         {
-            var temp = await DataProvider.GetAllKategorien();
+            var temp = await DataProvider.GetAllSpiele();
+            foreach(ClsSpiel spl in temp)
+            {
+                Debug.WriteLine(spl);
+            }
+            Debug.WriteLine(m_spiel);
+            ClsSpiel spiel = temp.Find(x => x.Name == m_spiel);
+            var temp1 = await DataProvider.GetKategorie(spiel.ID);
 
-            foreach (ClsKategorie spl in temp)
+            foreach (ClsKategorie spl in temp1)
             {
                 m_viewModel.KategorienListe.Add(spl);
             }

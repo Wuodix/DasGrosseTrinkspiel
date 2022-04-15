@@ -13,20 +13,23 @@
   <ItemGroup>
     <None Remove="Images\Logo.jpg" />
     <None Remove="Images\Test.jpg" />
+    <None Remove="Sonstiges\Fragen.csv" />
     <None Remove="Sonstiges\Kategorien.csv" />
-    <None Remove="Sonstiges\Test.csv" />
+    <None Remove="Sonstiges\Spiele.csv" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Images\Logo.jpg" />
     <EmbeddedResource Include="Images\Test.jpg" />
     <EmbeddedResource Include="Sonstiges\Kategorien.csv" />
-    <EmbeddedResource Include="Sonstiges\Test.csv" />
+    <EmbeddedResource Include="Sonstiges\Fragen.csv" />
+    <EmbeddedResource Include="Sonstiges\Spiele.csv" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
     <PackageReference Include="SQLiteNetExtensions" Version="2.1.0" />
+    <PackageReference Include="Xamarin.CommunityToolkit" Version="2.0.1" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2401" />
     <PackageReference Include="Xamarin.Essentials" Version="1.7.2" />
   </ItemGroup>

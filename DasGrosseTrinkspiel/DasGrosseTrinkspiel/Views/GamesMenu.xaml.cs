@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using DasGrosseTrinkspiel.Classes;
+using System.Diagnostics;
 
 namespace DasGrosseTrinkspiel.Views
 {
@@ -31,7 +32,15 @@ namespace DasGrosseTrinkspiel.Views
         }
         private void m_btnKartenspiel_Clicked(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new ChoseList(Spielart.Kartenspiel));
+            if((sender as Button).Text == "Wer Würde Eher...?")
+            {
+                Navigation.PushAsync(new ChoseList(Spielart.Kartenspiel, "Wer Wuerde Eher...?"));
+            }
+            else
+            {
+                Navigation.PushAsync(new ChoseList(Spielart.Kartenspiel, (sender as Button).Text));
+            }
+
         }
     }
 }

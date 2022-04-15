@@ -39,6 +39,7 @@
                             WidthRequest="{StaticResource Spiele.ButtonWidth}"
                             HeightRequest="{StaticResource Spiele.ButtonHeight}"
                             AbsoluteLayout.LayoutBounds="0,70"
+                            Clicked="m_btnKartenspiel_Clicked"
                         />
                         <Button Text="Picolo Klon"
                             TextColor="White"
@@ -48,6 +49,7 @@
                             WidthRequest="{StaticResource Spiele.ButtonWidth}"
                             HeightRequest="{StaticResource Spiele.ButtonHeight}"
                             AbsoluteLayout.LayoutBounds="0,140"
+                            Clicked="m_btnKartenspiel_Clicked"
                         />
                         <Button Text="Wahrheit, Wahl, oder Pflicht"
                             TextColor="White"
@@ -57,6 +59,7 @@
                             WidthRequest="{StaticResource Spiele.ButtonWidth}"
                             HeightRequest="{StaticResource Spiele.ButtonHeight}"
                             AbsoluteLayout.LayoutBounds="0,210"
+                            Clicked="m_btnKartenspiel_Clicked"
                         />
                         <Button Text="7 Minutes in Heaven"
                             TextColor="White"

@@ -5,12 +5,11 @@ using System.Text;
 
 namespace DasGrosseTrinkspiel.Classes
 {
-    internal class ClsKategorie
+    internal class ClsSpiel
     {
         [PrimaryKey, AutoIncrement]
         public int ID { get; set; }
         public string Name { get; set; }
-        public int Game { get; set; }
 
         public override string ToString()
         {

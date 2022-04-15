@@ -17,7 +17,7 @@
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
             </StackLayout>
-            <Label BackgroundColor="Red"
+            <Label BackgroundColor="Transparent"
                    Grid.Column="0">
                 <Label.GestureRecognizers>
                     <TapGestureRecognizer Tapped="PreviousPageTap"/>
