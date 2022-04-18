@@ -19,6 +19,7 @@ namespace DasGrosseTrinkspiel.Views
         {
             InitializeComponent();
 
+            //!! X in der Ecke einbauen um Kartenspiel zu beenden (auf IOS gibts den Zurückknopf nicht) !!
             Fragenlabel.Text = Frage;
         }
 
