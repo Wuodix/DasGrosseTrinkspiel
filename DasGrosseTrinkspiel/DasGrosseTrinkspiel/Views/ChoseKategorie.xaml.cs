@@ -62,7 +62,11 @@ namespace DasGrosseTrinkspiel.Views
                 switch (m_spielart)
                 {
                     case Spielart.Kartenspiel:
-                        DataHolder.Kartenspiel = new ClsKartenspiel(list, m_spielerliste);
+                        DataHolder.Kartenspiel = new ClsKartenspiel()
+                        {
+                            Name = m_spiel
+                        };
+                        DataHolder.Kartenspiel.Start(list, m_spielerliste);
                         break;
                     case Spielart.Sonstiges:
                         //Andere Spiele Starten bzw. für andere Spielarten noch enum und Dataholder ding erstellen

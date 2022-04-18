@@ -40,7 +40,6 @@ namespace DasGrosseTrinkspiel.Views
             {
                 Navigation.PushAsync(new ChoseList(Spielart.Kartenspiel, (sender as Button).Text));
             }
-
         }
     }
 }

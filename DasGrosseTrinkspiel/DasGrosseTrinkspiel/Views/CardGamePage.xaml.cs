@@ -28,12 +28,12 @@ namespace DasGrosseTrinkspiel.Views
             MessagingCenter.Send(this, "ForceLandscape");
         }
 
-        private async void NextPageTap(object sender, EventArgs e)
+        private async void NextPage()
         {
             await Navigation.PushModalAsync(DataHolder.Kartenspiel.NextCard());
         }
 
-        private async void PreviousPageTap(object sender, EventArgs e)
+        private async void PreviousPage()
         {
             if (DataHolder.Kartenspiel.PreviousCard())
             {
@@ -58,5 +58,19 @@ namespace DasGrosseTrinkspiel.Views
 
             return true;
         }
+        private void OnSwipe(object sender, SwipedEventArgs e)
+        {
+            switch (e.Direction)
+            {
+                case SwipeDirection.Left:
+                    NextPage();
+                    break;
+                case SwipeDirection.Right:
+                    PreviousPage();
+                    break;
+            }
+        }
+        private void NextPageTap(object sender, EventArgs e) { NextPage(); }
+        private void PreviousPageTap(object sender, EventArgs e) { PreviousPage(); }
     }
 }
