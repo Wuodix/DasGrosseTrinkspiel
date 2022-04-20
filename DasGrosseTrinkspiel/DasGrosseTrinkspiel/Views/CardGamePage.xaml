@@ -11,14 +11,23 @@
                     <ColumnDefinition Width="8*"/>
                     <ColumnDefinition Width="1.75*"/>
                 </Grid.ColumnDefinitions>
-                <StackLayout BackgroundColor="{StaticResource PrimaryBackground}"
-                         Grid.ColumnSpan="3">
-                    <Label Text="{Binding Frage}"
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label Text="{Binding Frage}"
+                   BackgroundColor="Transparent"
                    FontSize="50"
                    x:Name="Fragenlabel"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-                </StackLayout>
+                   VerticalOptions="CenterAndExpand" 
+                   HorizontalOptions="CenterAndExpand" />
+                <Label Text="{Binding Spielname}"
+                       BackgroundColor="Transparent"
+                       FontSize="40"
+                       x:Name="Spielnamenlabel"
+                       HorizontalOptions="CenterAndExpand"
+                       VerticalOptions="CenterAndExpand"
+                       Grid.Row="1"/>
                 <Label BackgroundColor="Transparent"
                    Grid.Column="0">
                     <Label.GestureRecognizers>

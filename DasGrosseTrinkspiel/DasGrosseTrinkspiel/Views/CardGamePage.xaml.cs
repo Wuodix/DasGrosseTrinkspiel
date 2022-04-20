@@ -15,12 +15,13 @@ namespace DasGrosseTrinkspiel.Views
     public partial class CardGamePage : ContentPage
     {
         Task m_toast;
-        public CardGamePage(string Frage)
+        public CardGamePage(string Frage, string Spielname)
         {
             InitializeComponent();
 
             //!! X in der Ecke einbauen um Kartenspiel zu beenden (auf IOS gibts den Zurückknopf nicht) !!
             Fragenlabel.Text = Frage;
+            Spielnamenlabel.Text = Spielname;
         }
 
         protected override void OnAppearing()
@@ -44,9 +45,9 @@ namespace DasGrosseTrinkspiel.Views
             await Navigation.PopModalAsync();
         }
 
-        protected override bool OnBackButtonPressed()
+        private void End()
         {
-            if(m_toast != null)
+            if (m_toast != null)
             {
                 if (m_toast.IsCompleted == false)
                 {
@@ -54,8 +55,13 @@ namespace DasGrosseTrinkspiel.Views
                     App.Current.MainPage = new NavigationPage(new MainMenu());
                 }
             }
-            
+
             m_toast = this.DisplayToastAsync("Erneut zurück zum Beenden", 1000);
+        }
+
+        protected override bool OnBackButtonPressed()
+        {
+            End();
 
             return true;
         }

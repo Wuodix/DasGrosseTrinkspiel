@@ -17,16 +17,18 @@ namespace DasGrosseTrinkspiel.Views
     {
         static ViewModels.KategorieViewModel m_viewModel;
         Spielart m_spielart;
+        Spiel m_spiel;
         ClsSpielerliste m_spielerliste;
-        string m_spiel;
-        public ChoseKategorie(Spielart spielart, ClsSpielerliste spielerliste, string spiel)
+        string m_spielstr;
+        public ChoseKategorie(Spielart spielart, ClsSpielerliste spielerliste, string spiel, Spiel Spiel)
         {
             InitializeComponent();
 
             BindingContext = m_viewModel = new ViewModels.KategorieViewModel();
             m_spielart = spielart;
             m_spielerliste = spielerliste;
-            m_spiel = spiel;
+            m_spielstr = spiel;
+            m_spiel = Spiel;
 
             m_loadingView.IsVisible = true;
 
@@ -40,7 +42,7 @@ namespace DasGrosseTrinkspiel.Views
                 Debug.WriteLine(spl);
             }
             Debug.WriteLine(m_spiel);
-            ClsSpiel spiel = temp.Find(x => x.Name == m_spiel);
+            ClsSpiel spiel = temp.Find(x => x.Name == m_spielstr);
             var temp1 = await DataProvider.GetKategorie(spiel.ID);
 
             foreach (ClsKategorie spl in temp1)
@@ -62,11 +64,12 @@ namespace DasGrosseTrinkspiel.Views
                 switch (m_spielart)
                 {
                     case Spielart.Kartenspiel:
-                        DataHolder.Kartenspiel = new ClsKartenspiel()
+                        if(m_spiel == Spiel.Picolo)
                         {
-                            Name = m_spiel
-                        };
-                        DataHolder.Kartenspiel.Start(list, m_spielerliste);
+                            DataHolder.Kartenspiel = new ClsPicolo(list, m_spielerliste);
+                        }
+                        DataHolder.Kartenspiel = new ClsKartenspiel() { Name = m_spielstr };
+                        DataHolder.Kartenspiel.Start(list, m_spielerliste, m_spiel);
                         break;
                     case Spielart.Sonstiges:
                         //Andere Spiele Starten bzw. für andere Spielarten noch enum und Dataholder ding erstellen
