@@ -17,7 +17,7 @@ namespace DasGrosseTrinkspiel.Classes
         }
         private async void Start(List<ClsKategorie> Fragenkategorien, ClsSpielerliste Spielerliste)
         {
-            m_spiel = Spiel.Picolo;
+            Spieltyp = Spiel.Picolo;
             m_spieler = await DataProvider.GetSpieler(Spielerliste.Id);
 
             foreach (ClsKategorie kategorie in Fragenkategorien)
@@ -106,18 +106,18 @@ namespace DasGrosseTrinkspiel.Classes
                 switch (i)
                 {
                     case 1:
-                        return new CardGamePage(Frage1, Name);
+                        return new CardGamePage(Frage1, Spieltyp);
                     case 2:
-                        return new CardGamePage(Frage2, Name);
+                        return new CardGamePage(Frage2, Spieltyp);
                     case 3:
-                        return new CardGamePage(Frage3, Name);
+                        return new CardGamePage(Frage3, Spieltyp);
                     case 4:
-                        return new CardGamePage(Frage4, Name);
+                        return new CardGamePage(Frage4, Spieltyp);
                     case 5:
-                        return new CardGamePage(Frage5, Name);
+                        return new CardGamePage(Frage5, Spieltyp);
                 }
             }
-            return new CardGamePage(m_randomizedFragen[m_selectedQuestion].Text, Name);
+            return new CardGamePage(m_randomizedFragen[m_selectedQuestion].Text, Spieltyp);
         }
     }
 }

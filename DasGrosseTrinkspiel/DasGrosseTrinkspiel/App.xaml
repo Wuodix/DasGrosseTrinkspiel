@@ -12,8 +12,7 @@
             <System:Double x:Key="Spiele.ButtonWidth">320</System:Double>
             <Style TargetType="NavigationPage">
                 <Setter Property="BarBackgroundColor" Value="{StaticResource PrimaryBackground}"/>
-                <Setter Property="BarTextColor" Value="{StaticResource ButtonColor1}"   />
-
+                <Setter Property="BarTextColor" Value="{StaticResource ButtonColor1}"/>
             </Style>
         </ResourceDictionary>
     </Application.Resources>

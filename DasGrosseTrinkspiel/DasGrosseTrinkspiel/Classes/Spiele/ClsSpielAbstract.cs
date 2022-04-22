@@ -12,11 +12,11 @@ namespace DasGrosseTrinkspiel.Classes
 {
     abstract class ClsSpielAbstract
     {
-        public string Name { get; set; }
+        public Spiel Spieltyp { get; set; }
 
         public override string ToString()
         {
-            return Name;
+            return Spieltyp.ToString();
         }
     }
     class ClsKartenspiel : ClsSpielAbstract
@@ -26,11 +26,9 @@ namespace DasGrosseTrinkspiel.Classes
         protected int m_selectedQuestion; //Nummer (in der Liste --> []) der ausgewählten Frage
         protected Random m_random = new Random();
         protected bool m_end = true;
-        protected Spiel m_spiel;
 
-        public async void Start(List<ClsKategorie> Fragenkategorien, ClsSpielerliste Spielerliste, Spiel Spiel)
+        public async void Start(List<ClsKategorie> Fragenkategorien, ClsSpielerliste Spielerliste)
         {
-            m_spiel = Spiel;
             m_spieler = await DataProvider.GetSpieler(Spielerliste.Id);
 
             foreach(ClsKategorie kategorie in Fragenkategorien)
@@ -72,7 +70,7 @@ namespace DasGrosseTrinkspiel.Classes
             {
                 m_selectedQuestion++;
             }
-            return new CardGamePage(m_randomizedFragen[m_selectedQuestion].Text, Name);
+            return new CardGamePage(m_randomizedFragen[m_selectedQuestion].Text, Spieltyp);
         }
         public bool PreviousCard()
         {

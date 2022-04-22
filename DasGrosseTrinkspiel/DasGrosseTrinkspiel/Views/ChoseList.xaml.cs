@@ -42,15 +42,13 @@ namespace DasGrosseTrinkspiel.Views
         static ChoseListViewModel m_viewModel;
         Spielart m_spielart;
         Spiel m_spiel;
-        string m_spielstr;
-        public ChoseList(Spielart spielart, string Spielname, Spiel spiel)
+        public ChoseList(Spielart spielart, Spiel spiel)
         {
             InitializeComponent();
 
             BindingContext = m_viewModel = new ChoseListViewModel();
 
             m_spielart = spielart;
-            m_spielstr = Spielname;
             m_spiel = spiel;
 
             m_loadingView.IsVisible = true;
@@ -72,7 +70,7 @@ namespace DasGrosseTrinkspiel.Views
         {
             if (m_lbxListen.SelectedItem != null)
             {
-                Navigation.PushAsync(new ChoseKategorie(m_spielart, m_lbxListen.SelectedItem as ClsSpielerliste, m_spielstr, m_spiel));
+                Navigation.PushAsync(new ChoseKategorie(m_spielart, m_lbxListen.SelectedItem as ClsSpielerliste, m_spiel));
             }
         }
         private void OnSwipe(object sender, SwipedEventArgs e)

@@ -19,15 +19,13 @@ namespace DasGrosseTrinkspiel.Views
         Spielart m_spielart;
         Spiel m_spiel;
         ClsSpielerliste m_spielerliste;
-        string m_spielstr;
-        public ChoseKategorie(Spielart spielart, ClsSpielerliste spielerliste, string spiel, Spiel Spiel)
+        public ChoseKategorie(Spielart spielart, ClsSpielerliste spielerliste, Spiel Spiel)
         {
             InitializeComponent();
 
             BindingContext = m_viewModel = new ViewModels.KategorieViewModel();
             m_spielart = spielart;
             m_spielerliste = spielerliste;
-            m_spielstr = spiel;
             m_spiel = Spiel;
 
             m_loadingView.IsVisible = true;
@@ -37,12 +35,7 @@ namespace DasGrosseTrinkspiel.Views
         private async void InitKategorien()
         {
             var temp = await DataProvider.GetAllSpiele();
-            foreach(ClsSpiel spl in temp)
-            {
-                Debug.WriteLine(spl);
-            }
-            Debug.WriteLine(m_spiel);
-            ClsSpiel spiel = temp.Find(x => x.Name == m_spielstr);
+            ClsSpiel spiel = temp.Find(x => x.Name == m_spiel.ToString());
             var temp1 = await DataProvider.GetKategorie(spiel.ID);
 
             foreach (ClsKategorie spl in temp1)
@@ -68,8 +61,8 @@ namespace DasGrosseTrinkspiel.Views
                         {
                             DataHolder.Kartenspiel = new ClsPicolo(list, m_spielerliste);
                         }
-                        DataHolder.Kartenspiel = new ClsKartenspiel() { Name = m_spielstr };
-                        DataHolder.Kartenspiel.Start(list, m_spielerliste, m_spiel);
+                        DataHolder.Kartenspiel = new ClsKartenspiel() { Spieltyp = m_spiel};
+                        DataHolder.Kartenspiel.Start(list, m_spielerliste);
                         break;
                     case Spielart.Sonstiges:
                         //Andere Spiele Starten bzw. für andere Spielarten noch enum und Dataholder ding erstellen

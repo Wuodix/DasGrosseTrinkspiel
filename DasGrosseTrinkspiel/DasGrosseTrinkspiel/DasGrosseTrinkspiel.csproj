@@ -13,12 +13,14 @@
   <ItemGroup>
     <None Remove="Images\Logo.jpg" />
     <None Remove="Images\Test.jpg" />
+    <None Remove="Images\X.png" />
     <None Remove="Sonstiges\Fragen.csv" />
     <None Remove="Sonstiges\Kategorien.csv" />
     <None Remove="Sonstiges\Spiele.csv" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Images\X.png" />
     <EmbeddedResource Include="Images\Logo.jpg" />
     <EmbeddedResource Include="Images\Test.jpg" />
     <EmbeddedResource Include="Sonstiges\Kategorien.csv" />

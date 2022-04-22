@@ -15,13 +15,15 @@ namespace DasGrosseTrinkspiel.Views
     public partial class CardGamePage : ContentPage
     {
         Task m_toast;
-        public CardGamePage(string Frage, string Spielname)
+        Spiel m_spiel;
+        public CardGamePage(string Frage, Spiel spiel)
         {
             InitializeComponent();
 
             //!! X in der Ecke einbauen um Kartenspiel zu beenden (auf IOS gibts den Zurückknopf nicht) !!
             Fragenlabel.Text = Frage;
-            Spielnamenlabel.Text = Spielname;
+            m_spiel = spiel;
+            Spielnamenlabel.Text = m_spiel.ToString();
         }
 
         protected override void OnAppearing()
@@ -79,5 +81,6 @@ namespace DasGrosseTrinkspiel.Views
         }
         private void NextPageTap(object sender, EventArgs e) { NextPage(); }
         private void PreviousPageTap(object sender, EventArgs e) { PreviousPage(); }
+        private void EndButton(object sender, EventArgs e) { End(); }
     }
 }
