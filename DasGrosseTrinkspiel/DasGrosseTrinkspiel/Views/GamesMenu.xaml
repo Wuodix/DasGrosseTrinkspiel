@@ -17,11 +17,11 @@
                     <ScrollView.GestureRecognizers>
                         <SwipeGestureRecognizer Direction="Right" Swiped="OnSwipe" />
                     </ScrollView.GestureRecognizers>
-                    <AbsoluteLayout BackgroundColor="Transparent">
+                    <AbsoluteLayout BackgroundColor="Transparent" x:Name="m_abslButtonLayout">
                         <AbsoluteLayout.GestureRecognizers>
                             <SwipeGestureRecognizer Direction="Right" Swiped="OnSwipe" />
                         </AbsoluteLayout.GestureRecognizers>
-                        <Button Text="Wer Würde Eher...?"
+                        <Button
                             TextColor="White"
                             Margin="0,0,40,0"
                             FontSize="27"
@@ -29,9 +29,9 @@
                             WidthRequest="{StaticResource Spiele.ButtonWidth}"
                             HeightRequest="{StaticResource Spiele.ButtonHeight}"
                             AbsoluteLayout.LayoutBounds="0,0"
-                            Clicked="m_btnKartenspiel_Clicked"
+                            Clicked="m_btnGame_Clicked"
                         />
-                        <Button Text="Ich hab noch nie..."
+                        <Button
                             TextColor="White"
                             Margin="0,0,40,0"
                             FontSize="27"
@@ -39,9 +39,9 @@
                             WidthRequest="{StaticResource Spiele.ButtonWidth}"
                             HeightRequest="{StaticResource Spiele.ButtonHeight}"
                             AbsoluteLayout.LayoutBounds="0,70"
-                            Clicked="m_btnKartenspiel_Clicked"
+                            Clicked="m_btnGame_Clicked"
                         />
-                        <Button Text="Picolo Klon"
+                        <Button
                             TextColor="White"
                             Margin="0,0,40,0"
                             FontSize="27"
@@ -49,9 +49,9 @@
                             WidthRequest="{StaticResource Spiele.ButtonWidth}"
                             HeightRequest="{StaticResource Spiele.ButtonHeight}"
                             AbsoluteLayout.LayoutBounds="0,140"
-                            Clicked="m_btnKartenspiel_Clicked"
+                            Clicked="m_btnGame_Clicked"
                         />
-                        <Button Text="Wahrheit, Wahl, oder Pflicht"
+                        <Button
                             TextColor="White"
                             Margin="0,0,40,0"
                             FontSize="18"
@@ -59,9 +59,9 @@
                             WidthRequest="{StaticResource Spiele.ButtonWidth}"
                             HeightRequest="{StaticResource Spiele.ButtonHeight}"
                             AbsoluteLayout.LayoutBounds="0,210"
-                            Clicked="m_btnKartenspiel_Clicked"
+                            Clicked="m_btnGame_Clicked"
                         />
-                        <Button Text="7 Minutes in Heaven"
+                        <Button
                             TextColor="White"
                             Margin="0,0,40,0"
                             FontSize="25"
@@ -70,7 +70,7 @@
                             HeightRequest="{StaticResource Spiele.ButtonHeight}"
                             AbsoluteLayout.LayoutBounds="0,280"
                         />
-                        <Button Text="Bin ich betrunken?"
+                        <Button
                             TextColor="White"
                             Margin="0,0,40,0"
                             FontSize="27"
@@ -79,7 +79,7 @@
                             HeightRequest="{StaticResource Spiele.ButtonHeight}"
                             AbsoluteLayout.LayoutBounds="0,350"
                         />
-                        <Button Text="Cocktail Mischen"
+                        <Button
                             TextColor="White"
                             Margin="0,0,40,0"
                             FontSize="27"
@@ -88,7 +88,7 @@
                             HeightRequest="{StaticResource Spiele.ButtonHeight}"
                             AbsoluteLayout.LayoutBounds="0,420"
                         />
-                        <Button Text="Ausnüchtern"
+                        <Button
                             TextColor="White"
                             Margin="0,0,40,0"
                             FontSize="27"
@@ -97,7 +97,7 @@
                             HeightRequest="{StaticResource Spiele.ButtonHeight}"
                             AbsoluteLayout.LayoutBounds="0,490"
                         />
-                        <Button Text="Würfel Brettspiel"
+                        <Button
                             TextColor="White"
                             Margin="0,0,40,0"
                             FontSize="27"
@@ -106,7 +106,7 @@
                             HeightRequest="{StaticResource Spiele.ButtonHeight}"
                             AbsoluteLayout.LayoutBounds="0,560"
                         />
-                        <Button Text="Horoskop"
+                        <Button
                             TextColor="White"
                             Margin="0,0,40,0"
                             FontSize="27"
@@ -115,7 +115,7 @@
                             HeightRequest="{StaticResource Spiele.ButtonHeight}"
                             AbsoluteLayout.LayoutBounds="0,630"
                         />
-                        <Button Text="Wer weiß was?"
+                        <Button
                             TextColor="White"
                             Margin="0,0,40,0"
                             FontSize="27"
@@ -124,7 +124,7 @@
                             HeightRequest="{StaticResource Spiele.ButtonHeight}"
                             AbsoluteLayout.LayoutBounds="0,700"
                         />
-                        <Button Text="Wer kennt wen am Besten?"
+                        <Button
                             TextColor="White"
                             Margin="0,0,40,0"
                             FontSize="18"
@@ -133,7 +133,7 @@
                             HeightRequest="{StaticResource Spiele.ButtonHeight}"
                             AbsoluteLayout.LayoutBounds="0,770"
                         />
-                        <Button Text="Ist das Normal?"
+                        <Button
                             TextColor="White"
                             Margin="0,0,40,0"
                             FontSize="27"
@@ -142,7 +142,7 @@
                             HeightRequest="{StaticResource Spiele.ButtonHeight}"
                             AbsoluteLayout.LayoutBounds="0,840"
                         />
-                        <Button Text="Allgemeinwissensfragen"
+                        <Button
                             TextColor="White"
                             Margin="0,0,40,0"
                             FontSize="20"
@@ -150,15 +150,6 @@
                             WidthRequest="{StaticResource Spiele.ButtonWidth}"
                             HeightRequest="{StaticResource Spiele.ButtonHeight}"
                             AbsoluteLayout.LayoutBounds="0,910"
-                        />
-                        <Button Text="Mischen"
-                            TextColor="White"
-                            FontSize="27"
-                            Margin="0,0,40,25"
-                            BackgroundColor="{StaticResource ButtonColor1}"
-                            WidthRequest="{StaticResource Spiele.ButtonWidth}"
-                            HeightRequest="{StaticResource Spiele.ButtonHeight}"
-                            AbsoluteLayout.LayoutBounds="0,980"
                         />
                     </AbsoluteLayout>
                 </ScrollView>

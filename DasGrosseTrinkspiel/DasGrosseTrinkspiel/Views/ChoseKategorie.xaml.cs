@@ -19,7 +19,8 @@ namespace DasGrosseTrinkspiel.Views
         Spielart m_spielart;
         Spiel m_spiel;
         ClsSpielerliste m_spielerliste;
-        public ChoseKategorie(Spielart spielart, ClsSpielerliste spielerliste, Spiel Spiel)
+        string m_spielstr;
+        public ChoseKategorie(Spielart spielart, ClsSpielerliste spielerliste, Spiel Spiel, string Spielname)
         {
             InitializeComponent();
 
@@ -27,6 +28,7 @@ namespace DasGrosseTrinkspiel.Views
             m_spielart = spielart;
             m_spielerliste = spielerliste;
             m_spiel = Spiel;
+            m_spielstr = Spielname;
 
             m_loadingView.IsVisible = true;
 
@@ -35,7 +37,22 @@ namespace DasGrosseTrinkspiel.Views
         private async void InitKategorien()
         {
             var temp = await DataProvider.GetAllSpiele();
-            ClsSpiel spiel = temp.Find(x => x.Name == m_spiel.ToString());
+            ClsSpiel spiel;
+            switch (m_spielstr)
+            {
+                case "Wer Würde Eher...?":
+                    spiel = temp.Find(x => x.Name == "Wer Wuerde Eher...?");
+                    break;
+                case "Wer weiß was?":
+                    spiel = temp.Find(x => x.Name == "Wer weiss was?");
+                    break;
+                case "Ausnüchtern":
+                    spiel = temp.Find(x => x.Name == "Ausnuechtern");
+                    break;
+                default:
+                    spiel = temp.Find(x => x.Name == m_spielstr);
+                    break;
+            }
             var temp1 = await DataProvider.GetKategorie(spiel.ID);
 
             foreach (ClsKategorie spl in temp1)
@@ -61,7 +78,7 @@ namespace DasGrosseTrinkspiel.Views
                         {
                             DataHolder.Kartenspiel = new ClsPicolo(list, m_spielerliste);
                         }
-                        DataHolder.Kartenspiel = new ClsKartenspiel() { Spieltyp = m_spiel};
+                        DataHolder.Kartenspiel = new ClsKartenspiel() { Name = m_spielstr};
                         DataHolder.Kartenspiel.Start(list, m_spielerliste);
                         break;
                     case Spielart.Sonstiges:

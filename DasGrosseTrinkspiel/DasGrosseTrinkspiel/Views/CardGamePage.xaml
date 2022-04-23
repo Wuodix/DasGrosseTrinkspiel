@@ -14,19 +14,9 @@
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="5*"/>
                 </Grid.RowDefinitions>
-                <Image 
-                    Source="{local:ImageResource DasGrosseTrinkspiel.Images.X.png}"
-                    BackgroundColor="Red"
-                    HeightRequest="10"
-                    WidthRequest="10"
-                    Grid.Column="2"
-                    Grid.Row="0">
-                    <Image.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="EndButton" />
-                    </Image.GestureRecognizers>
-                </Image>
                 <Label Text="{Binding Spielname}"
                        BackgroundColor="Transparent"
                        TextColor="White"
@@ -35,18 +25,19 @@
                        HorizontalOptions="CenterAndExpand"
                        VerticalOptions="CenterAndExpand"
                        Grid.ColumnSpan="3"
-                       Grid.Row="0"/>
+                       Grid.Row="1"/>
                 <Label Text="{Binding Frage}"
                    BackgroundColor="Transparent"
                    TextColor="White"
                    FontSize="50"
                    x:Name="Fragenlabel"
                    Grid.ColumnSpan="3"
-                   Grid.RowSpan="2"
+                   Grid.RowSpan="3"
                    VerticalOptions="CenterAndExpand" 
                    HorizontalOptions="CenterAndExpand" />
                 <Label BackgroundColor="Transparent"
-                   Grid.Column="0">
+                   Grid.Column="0"
+                   Grid.RowSpan="3">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Tapped="PreviousPageTap"/>
                     </Label.GestureRecognizers>
@@ -54,11 +45,24 @@
                 <Label BackgroundColor="Transparent"
                    Grid.Column="1" />
                 <Label BackgroundColor="Transparent"
-                   Grid.Column="2" >
+                   Grid.Column="2"
+                   Grid.RowSpan="3">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Tapped="NextPageTap" />
                     </Label.GestureRecognizers>
                 </Label>
+                <Frame
+                    Grid.Column="2"
+                    Grid.Row="0"
+                    BackgroundColor="Transparent">
+                    <Image 
+                    Source="{local:ImageResource DasGrosseTrinkspiel.Images.X.png}"
+                    BackgroundColor="Transparent"
+                    Margin="-5"/>
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="EndButton"/>
+                    </Frame.GestureRecognizers>
+                </Frame>
             </Grid>
         </ext:SwipeContainer>
     </ContentPage.Content>

@@ -58,9 +58,16 @@ namespace DasGrosseTrinkspiel.Views
                     {
                         string line = reader.ReadLine();
 
+                        Debug.WriteLine(line);
+                        Debug.WriteLine(DataHolder.Spiele.Count);
+                        DataHolder.Spiele.Add(new Classes.ClsSpiel() { Name = line });
                         await DataProvider.AddSpiel(line);
                     }
                 }
+            }
+            else
+            {
+                DataHolder.Spiele = await DataProvider.GetAllSpiele();
             }
         }
 

@@ -12,11 +12,11 @@ namespace DasGrosseTrinkspiel.Classes
 {
     abstract class ClsSpielAbstract
     {
-        public Spiel Spieltyp { get; set; }
+        public string Name { get; set; }
 
         public override string ToString()
         {
-            return Spieltyp.ToString();
+            return Name;
         }
     }
     class ClsKartenspiel : ClsSpielAbstract
@@ -70,7 +70,7 @@ namespace DasGrosseTrinkspiel.Classes
             {
                 m_selectedQuestion++;
             }
-            return new CardGamePage(m_randomizedFragen[m_selectedQuestion].Text, Spieltyp);
+            return new CardGamePage(m_randomizedFragen[m_selectedQuestion].Text, Name);
         }
         public bool PreviousCard()
         {
